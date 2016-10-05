@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  category: MyString
+  text: MyString
+  value: 1
+  final: false
+  week: 2016-10-04
+  seq: 
+
+two:
+  category: MyString
+  text: MyString
+  value: 1
+  final: false
+  week: 2016-10-04
+  seq: 

@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  clue: one
+  user: MyString
+  response: MyString
+  wager: 1
+  status: 1
+
+two:
+  clue: two
+  user: MyString
+  response: MyString
+  wager: 1
+  status: 1
