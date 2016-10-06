@@ -1,0 +1,26 @@
+<div class='container'>
+	<div class='row'>
+		<div class='col-xs-12'>
+			<table class='table'>
+				<% @clues.order(:seq).each do |clue| %>
+					<tr>
+						<td>
+							<%= render partial: 'show_admin', locals: {clue: clue} %>
+						</td>
+						<td>
+							<%= link_to 'Edit', edit_clue_path(clue) %><br>
+							<%= link_to 'Delete', clue_path(clue),
+									method: :delete,
+									data: {confirm: 'Are you sure?'} %>
+						</td>
+					</tr>
+				<% end %>
+			</table>
+		</div>
+	</div>
+	<div class='row'>
+		<div class='col-xs-2'>
+			<%= link_to 'New clue', new_clue_path %>
+		<div>
+	</div>
+</div>
