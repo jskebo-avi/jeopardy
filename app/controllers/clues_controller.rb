@@ -1,6 +1,7 @@
 class CluesController < ApplicationController
+	http_basic_authenticate_with name: "admin", password: "trebek", except: :show
 	def index
-		@clues = Clue.all
+		@clues = Clue.of_week(Date.today)
 	end
 
 	def show
@@ -18,7 +19,7 @@ class CluesController < ApplicationController
 	def create
 		@clue = Clue.new(clue_params)
 		if @clue.save
-			redirect_to @clue
+			redirect_to clues_path
 		else
 			render 'new'
 		end
@@ -37,9 +38,10 @@ class CluesController < ApplicationController
 		@clue = Clue.find(params[:id])
 		@clue.destroy
 		redirect_to clues_path
+	end
 
 	private
-	
+
 	def clue_params
 		params.require(:clue).permit(:category, :text, :value, :final, :week, :seq)
 	end

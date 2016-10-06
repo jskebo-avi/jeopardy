@@ -26,4 +26,20 @@ class Answer < ApplicationRecord
   		nil
   	end
   end
+
+  def user_current_score
+    this_clue = Clue.find(self[:clue_id])
+    clues = Clue.joins(:answers).
+      where("clues.week = ? AND clues.seq <= ? AND answers.user = ? AND answers.status = ?",
+      this_clue[:week], this_clue[:seq], self[:user], 1)
+    clues.sum(:value)
+  end
+
+  def user_previous_score
+    this_clue = Clue.find(self[:clue_id])
+    clues = Clue.joins(:answers).
+      where("clues.week = ? AND clues.seq < ? AND answers.user = ? AND answers.status = ?",
+      this_clue[:week], this_clue[:seq], self[:user], 1)
+    clues.sum(:value)
+  end
 end
