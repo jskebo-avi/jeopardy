@@ -31,7 +31,7 @@ class AnswersController < ApplicationController
 		@answer.status = :correct
 		@answer.save
 		respond_to do |format|
-		    format.js   { render :layout => false }
+		    format.js   { render json: { test: 1 } }
 		    format.html { redirect_to clues_url }
 		end
 	end

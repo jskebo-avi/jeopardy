@@ -29,7 +29,8 @@
 						<% else %>
 							<td><%= answer.user_current_score %></td>
 						<% end %>
-						<td><%= button_to 'Correct', {:controller => :answers, :action => :correct, params: {clue: clue.id, answer: answer.id}, remote: true, type: "script"}, {class: 'btn_correct'} %></td>
+						<td><%= answer.user_current_score %></td>
+						<td><button class="btn_correct" type="button" data-clue="<%= clue.id %>" data-answer="<%= answer.id %>">Correct</button></td>
 					</tr>
 				<% end %>
 			</table>
