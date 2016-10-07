@@ -11,10 +11,11 @@
 				<tr>
 					<th>Player</th>
 					<th>Response</th>
+					<th>Score</th>
 					<% if clue.final? %>
 						<th>Wager</th>
+						<th>Final Score</th>
 					<% end %>
-					<th>Score</th>
 					<th></th>
 				</tr>
 				<% clue.answers.each do |answer| %>
@@ -22,10 +23,13 @@
 						<td><%= answer.user %></td>
 						<td><%= answer.response %></td>
 						<% if clue.final? %>
+							<td><%= answer.user_previous_score %></td>
 							<td><%= answer.wager %></td>
+							<td><%= answer.user_current_score %></td>
+						<% else %>
+							<td><%= answer.user_current_score %></td>
 						<% end %>
-						<td><%= answer.user_current_score %></td>
-						<td><%= button_to 'Correct', {:controller => :answers, :action => :correct, params: {clue: clue.id, answer: answer.id}, remote: true}, {class: 'btn_correct'} %></td>
+						<td><%= button_to 'Correct', {:controller => :answers, :action => :correct, params: {clue: clue.id, answer: answer.id}, remote: true, type: "script"}, {class: 'btn_correct'} %></td>
 					</tr>
 				<% end %>
 			</table>

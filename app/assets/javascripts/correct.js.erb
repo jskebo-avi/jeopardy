@@ -1,0 +1,7 @@
+$(function() {
+	$('.btn_correct').bind('ajax:success', function() {
+		alert("hello");
+	   $(this).closest('tr').css("background-color", "green");
+	});
+
+})
