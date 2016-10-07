@@ -1,2 +1,10 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
+
+.answer-correct {
+	background-color: chartreuse;
+}
+
+.answer-incorrect {
+	background-color: tomato;
+}

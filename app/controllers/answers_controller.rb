@@ -2,22 +2,11 @@ class AnswersController < ApplicationController
 	def create
 		@clue = Clue.find(params[:clue_id])
 		@answer = @clue.answers.new(answer_params)
-		@answer.status = :pending
+		@answer.status = 0
 		@answer.save
 		redirect_to clue_path(@clue)
 	end
-=begin
-	def update
-		@clue = Clue.find(params[:clue_id])
-		@answer = @clue.answers.find(:id)
-		@answer.update(answer_params)
-		respond_to do |format|
-		    format.html { redirect_to clues_url }
-		    format.json { head :no_content }
-		    format.js   { render :layout => false }
-		end
-	end
-=end
+
 	def destroy
 		@clue = Clue.find(params[:clue_id])
 		@answer = @clue.answers.find(:id)
@@ -25,14 +14,21 @@ class AnswersController < ApplicationController
 		redirect_to clue_path(@clue)
 	end
 
-	def correct
+	def evaluate
 		@clue = Clue.find(params[:clue])
 		@answer = @clue.answers.find(params[:answer])
-		@answer.status = :correct
+		@answer.status = params[:status]
 		@answer.save
 		respond_to do |format|
-		    format.js   { render json: { test: 1 } }
+		    format.js   { render json: { new_user_score: @answer.user_current_score } }
 		    format.html { redirect_to clues_url }
+		end
+	end
+
+	def get_user_score
+		@answer = Answer.find(params[:answer])
+		respond_to do |format|
+		    format.js   { render json: { user_score: @answer.user_current_score } }
 		end
 	end
 

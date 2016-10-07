@@ -17,20 +17,21 @@
 						<th>Final Score</th>
 					<% end %>
 					<th></th>
+					<th></th>
 				</tr>
 				<% clue.answers.each do |answer| %>
-					<tr>
-						<td><%= answer.user %></td>
+					<tr class="<%= case answer.status when 1 then 'answer-correct' when -1 then 'answer-incorrect' else 'answer-pending' end %>">
+						<td class="answer-user"><%= answer.user %></td>
 						<td><%= answer.response %></td>
 						<% if clue.final? %>
 							<td><%= answer.user_previous_score %></td>
 							<td><%= answer.wager %></td>
-							<td><%= answer.user_current_score %></td>
+							<td class='final_score'><%= answer.user_current_score %></td>
 						<% else %>
-							<td><%= answer.user_current_score %></td>
+							<td class='final_score'><%= answer.user_current_score %></td>
 						<% end %>
-						<td><%= answer.user_current_score %></td>
 						<td><button class="btn_correct" type="button" data-clue="<%= clue.id %>" data-answer="<%= answer.id %>">Correct</button></td>
+						<td><button class="btn_incorrect" type="button" data-clue="<%= clue.id %>" data-answer="<%= answer.id %>">Incorrect</button></td>
 					</tr>
 				<% end %>
 			</table>
