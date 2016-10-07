@@ -1,0 +1,34 @@
+$(function() {
+  $('.btn_correct').click(function() {
+    var clue = $(this).attr("data-clue");
+    var answer = $(this).attr("data-answer");
+    var successHandler = function(response) {
+      // because of how javascript 'this' scoping works (which you should totally research)
+      // the $(this).whatever will not refer to the clicked element anymore.
+      // so jquery offers a proxy function that defines a function with the 'this' scoped to the argument you give it.
+      // This is one of the sucky things about javascript.  :(  Sorry!
+      // see below where we're using $.proxy to wrap this function.
+      $(this).closest('tr').css("background-color", "green");
+
+      // you can also do things with the response variable here, it will be populated with the data you return from the controller
+      console.log(response.test);
+    };
+
+    $.ajax({
+      url: "/answers/correct",
+      data: JSON.stringify({ clue: clue, answer: answer }),
+      dataType: 'json',
+      contentType: 'application/json',
+      type: 'POST',
+    }).done($.proxy(successHandler, this))
+    .fail(function() {
+      // consider what to do in case of errors
+      // http://api.jquery.com/jquery.ajax/
+      debugger;
+    });
+
+    // you could probably think of something better here to indicate "loading"
+    // because the above ajax call is anycronous, this line will execute before the success and error handlers do
+    $(this).closest('tr').css("background-color", "yellow");
+  });
+});

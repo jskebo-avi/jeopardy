@@ -25,7 +25,9 @@
 							<td><%= answer.wager %></td>
 						<% end %>
 						<td><%= answer.user_current_score %></td>
-						<td><%= button_to 'Correct', {:controller => :answers, :action => :correct, params: {clue: clue.id, answer: answer.id}, remote: true}, {class: 'btn_correct'} %></td>
+            <td>
+              <button class="btn_correct" type="button" data-clue="<%= clue.id %>" data-answer="<%= answer.id %>">Correct</button>
+            </td>
 					</tr>
 				<% end %>
 			</table>
