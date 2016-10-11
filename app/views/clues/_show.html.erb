@@ -1,7 +1,7 @@
 <div class='container'>
 	<div class='row'>
 		<div class='col-xs-6'>
-			<h3><%= link_to clue.category + ' ' + clue.value.to_s, edit_clue_path(clue) %></h3>
+			<h3><%= clue.category + ' ' + clue.value.to_s %></h3>
 			<p>
 				<%= clue.text %>
 			</p>
@@ -16,9 +16,6 @@
 						<th>Wager</th>
 						<th>Final Score</th>
 					<% end %>
-					<th></th>
-					<th></th>
-					<th></th>
 				</tr>
 				<% clue.answers.sort_by{ |a| [-a.user_current_score, a.user] }.each do |answer| %>
 					<tr class="<%= case answer.status when 1 then 'answer-correct' when -1 then 'answer-incorrect' else 'answer-pending' end %>" id="<%= answer.id %>">
@@ -31,9 +28,6 @@
 						<% else %>
 							<td class='current_score'><%= answer.user_current_score %></td>
 						<% end %>
-						<td><button class="btn_correct" type="button" data-clue="<%= clue.id %>" data-answer="<%= answer.id %>">Correct</button></td>
-						<td><button class="btn_incorrect" type="button" data-clue="<%= clue.id %>" data-answer="<%= answer.id %>">Incorrect</button></td>
-						<td><button class="btn_delete" type="button" data-answer="<%= answer.id %>">Delete</button></td>
 					</tr>
 				<% end %>
 			</table>

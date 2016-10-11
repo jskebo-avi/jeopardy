@@ -2,9 +2,9 @@ $(function() {
 	var evaluate = function(status, btn){
       	var clue = $(btn).attr("data-clue");
     	var answer = $(btn).attr("data-answer");
-    	var color = status === 1 ? "chartreuse" : "tomato";
-		var evalSuccessHandler = function(evalResponse) {
-	      	$(btn).closest('tr').css("background-color", color);
+    	var trClass = status === 1 ? "answer-correct" : "answer-incorrect";
+		var evalSuccessHandler = function(evalResponse){
+	      	$(btn).closest('tr').attr("class", trClass);
 	      	$(btn).parent().siblings('.current_score').text(evalResponse.new_user_score);
 	      	var user = $(btn).parent().siblings().closest(".answer-user").text();
 
@@ -47,5 +47,24 @@ $(function() {
   	});
 	$('.btn_incorrect').click(function() {
 		evaluate(-1, $(this));
+  	});
+
+  	
+  	$('.btn_delete').click(function() {
+  		var answer = $(this).attr("data-answer");
+  		var deleteSuccessHandler = function(delResponse){
+  			$(this).parent().parent().remove();
+  		}
+
+  		$.ajax({
+	      	url: "/answers/" + answer,
+	      	data: {"_method":"delete"},
+	      	dataType: 'json',
+	      	contentType: 'application/json',
+	      	type: 'POST',
+	    }).done($.proxy(deleteSuccessHandler, this))
+	    .fail(function() {
+	      	debugger;
+	    });
   	});
 });

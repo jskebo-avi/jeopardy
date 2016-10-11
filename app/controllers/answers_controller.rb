@@ -5,14 +5,16 @@ class AnswersController < ApplicationController
 		@answer.status = 0
 		@answer.score = 0
 		@answer.save
-		redirect_to clue_path(@clue)
+		redirect_to root_path
 	end
 
 	def destroy
 		@clue = Clue.find(params[:clue_id])
 		@answer = @clue.answers.find(:id)
 		@answer.destroy
-		redirect_to clue_path(@clue)
+		respond_to do |format|
+		    format.js   {}
+		    format.html { redirect_to clues_url }
 	end
 
 	def evaluate

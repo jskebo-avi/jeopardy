@@ -12,7 +12,7 @@
 			  	</div>
 			</div>-->
 			<table class='table'>
-				<% @clues.order(:seq).each do |clue| %>
+				<% @clues.order(:week, :seq).each do |clue| %>
 					<tr>
 						<td>
 							<%= render partial: 'show_admin', locals: {clue: clue} %>
