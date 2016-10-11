@@ -1,7 +1,7 @@
 class CluesController < ApplicationController
 	http_basic_authenticate_with name: "admin", password: "trebek", except: :show
 	def index
-		@clues = Clue.of_week(Date.today)
+		@clues = Clue.all#of_week(Date.today)
 	end
 
 	def show
@@ -10,6 +10,10 @@ class CluesController < ApplicationController
 
 	def new
 		@clue = Clue.new
+		defSeq = Clue.where("week = ?", Date.today.beginning_of_week).maximum(:seq)
+		if defSeq.nil? then defSeq = 10 else defSeq += 10 end
+		@clue.seq = defSeq
+		@clue.week = Date.today
 	end
 
 	def edit

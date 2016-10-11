@@ -1,7 +1,7 @@
 <div class='container'>
 	<div class='row'>
 		<div class='col-xs-6'>
-			<h3><%= clue.category + ' ' + clue.value.to_s %></h3>
+			<h3><%= link_to clue.category + ' ' + clue.value.to_s, edit_clue_path(clue) %></h3>
 			<p>
 				<%= clue.text %>
 			</p>
@@ -20,15 +20,15 @@
 					<th></th>
 				</tr>
 				<% clue.answers.each do |answer| %>
-					<tr class="<%= case answer.status when 1 then 'answer-correct' when -1 then 'answer-incorrect' else 'answer-pending' end %>">
+					<tr class="<%= case answer.status when 1 then 'answer-correct' when -1 then 'answer-incorrect' else 'answer-pending' end %>" id="<%= answer.id %>">
 						<td class="answer-user"><%= answer.user %></td>
 						<td><%= answer.response %></td>
 						<% if clue.final? %>
-							<td><%= answer.user_previous_score %></td>
+							<td class='previous_score'><%= answer.user_previous_score %></td>
 							<td><%= answer.wager %></td>
-							<td class='final_score'><%= answer.user_current_score %></td>
+							<td class='current_score'><%= answer.user_current_score %></td>
 						<% else %>
-							<td class='final_score'><%= answer.user_current_score %></td>
+							<td class='current_score'><%= answer.user_current_score %></td>
 						<% end %>
 						<td><button class="btn_correct" type="button" data-clue="<%= clue.id %>" data-answer="<%= answer.id %>">Correct</button></td>
 						<td><button class="btn_incorrect" type="button" data-clue="<%= clue.id %>" data-answer="<%= answer.id %>">Incorrect</button></td>

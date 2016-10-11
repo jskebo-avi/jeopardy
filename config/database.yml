@@ -24,8 +24,10 @@ default: &default
 development:
   adapter: postgresql
   encoding: utf8
-  database: jeopardy_dev
+  database: jeopardy-dev
   pool: 5
+  username: jeopardy
+  password: jeopardy
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
@@ -62,6 +64,8 @@ test: &TEST
   encoding: utf8
   database: jeopardy-test
   pool: 5
+  username: jeopardy
+  password: jeopardy
 
 # As with config/secrets.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -87,3 +91,5 @@ production:
   encoding: utf8
   database: jeopardy-prod
   pool: 5
+  username: jeopardy
+  password: jeopardy

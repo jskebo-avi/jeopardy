@@ -2,19 +2,27 @@ class Answer < ApplicationRecord
   belongs_to :clue
 
   def user_current_score
-    this_clue = Clue.find(self[:clue_id])
-    clues = Clue.joins(:answers).
-      where("clues.week = ? AND clues.seq <= ? AND answers.user = ? AND answers.status = ?",
-      this_clue[:week], this_clue[:seq], self[:user], 1)
-    clues.sum(:value)
+    clue = Clue.find(self[:clue_id])
+    answers = Answer.joins(:clue).
+      where("clues.week = ? AND clues.seq <= ? AND answers.user = ?",
+        clue[:week], clue[:seq], self[:user])
+    #clues = Clue.joins(:answers).
+    #  where("clues.week = ? AND clues.seq <= ? AND answers.user = ? 
+    #    AND clues.final = false AND answers.status = 1",
+    #    clue[:week], clue[:seq], self[:user])
+    answers.sum(:score)
   end
 
   def user_previous_score
-    this_clue = Clue.find(self[:clue_id])
-    clues = Clue.joins(:answers).
-      where("clues.week = ? AND clues.seq < ? AND answers.user = ? AND answers.status = ?",
-      this_clue[:week], this_clue[:seq], self[:user], 1)
-    clues.sum(:value)
+    clue = Clue.find(self[:clue_id])
+    answers = Answer.joins(:clue).
+      where("clues.week = ? AND clues.seq < ? AND answers.user = ?",
+        clue[:week], clue[:seq], self[:user])
+    #clues = Clue.joins(:answers).
+    #  where("clues.week = ? AND clues.seq < ? AND answers.user = ?
+    #    AND clues.final = false AND answers.status = 1",
+    #    clue[:week], clue[:seq], self[:user])
+    answers.sum(:value)
   end
 
   

@@ -9,25 +9,24 @@ $(function() {
 	      	// This is one of the sucky things about javascript.  :(  Sorry!
 	      	// see below where we're using $.proxy to wrap this function.
 	      	$(this).closest('tr').css("background-color", "chartreuse");
-	      	$(this).parent().siblings('.final_score').text(evalResponse.new_user_score);
+	      	$(this).parent().siblings('.current_score').text(evalResponse.new_user_score);
 	      	var user = $(this).parent().siblings().closest(".answer-user").text();
 
 	      	var scoreSuccessHandler = function(scoreResponse){
-	      		$(this).siblings('.final_score').text(scoreResponse.user_score)
+	      		$(this).siblings('.current_score').text(scoreResponse.user_score)
 	      	}
 
 	      	$(".answer-user").each(function(){
 	      		if($(this).text() === user){
+	      			var answer_id = $(this).parent().attr("id") //tr
 	      			$.ajax({
 				      	url: "/answers/get_user_score",
-				      	data: JSON.stringify({ answer: answer, user: user }),
+				      	data: JSON.stringify({ answer: answer_id, user: user }),
 				      	dataType: 'json',
 				      	contentType: 'application/json',
 				      	type: 'POST',
 				    }).done($.proxy(scoreSuccessHandler, this))
 				    .fail(function() {
-				      	// consider what to do in case of errors
-				      	// http://api.jquery.com/jquery.ajax/
 				      	debugger;
 				    });
 	      		}
@@ -42,8 +41,6 @@ $(function() {
 	      	type: 'POST',
 	    }).done($.proxy(evalSuccessHandler, this))
 	    .fail(function() {
-	      	// consider what to do in case of errors
-	      	// http://api.jquery.com/jquery.ajax/
 	      	debugger;
 	    });
 
@@ -56,25 +53,24 @@ $(function() {
 	    var answer = $(this).attr("data-answer");
 	    var evalSuccessHandler = function(evalResponse) {
 	      	$(this).closest('tr').css("background-color", "tomato");
-	      	$(this).parent().siblings().closest('.final_score').text(evalResponse.new_user_score);
+	      	$(this).parent().siblings().closest('.current_score').text(evalResponse.new_user_score);
 	      	var user = $(this).parent().siblings().closest(".answer-user").text();
 
 	      	var scoreSuccessHandler = function(scoreResponse){
-	      		$(this).siblings('.final_score').text(scoreResponse.user_score)
+	      		$(this).siblings('.current_score').text(scoreResponse.user_score)
 	      	}
 
 	      	$(".answer-user").each(function(){
 	      		if($(this).text() === user){
+	      			var answer_id = $(this).parent().attr("id") //tr
 	      			$.ajax({
 				      	url: "/answers/get_user_score",
-				      	data: JSON.stringify({ answer: answer, user: user }),
+				      	data: JSON.stringify({ answer: answer_id, user: user }),
 				      	dataType: 'json',
 				      	contentType: 'application/json',
 				      	type: 'POST',
 				    }).done($.proxy(scoreSuccessHandler, this))
 				    .fail(function() {
-				      	// consider what to do in case of errors
-				      	// http://api.jquery.com/jquery.ajax/
 				      	debugger;
 				    });
 	      		}

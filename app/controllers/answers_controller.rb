@@ -3,6 +3,7 @@ class AnswersController < ApplicationController
 		@clue = Clue.find(params[:clue_id])
 		@answer = @clue.answers.new(answer_params)
 		@answer.status = 0
+		@answer.score = 0
 		@answer.save
 		redirect_to clue_path(@clue)
 	end
@@ -18,6 +19,15 @@ class AnswersController < ApplicationController
 		@clue = Clue.find(params[:clue])
 		@answer = @clue.answers.find(params[:answer])
 		@answer.status = params[:status]
+		if @clue.final then
+			if params[:status] == 1 then
+				@answer.score = @answer.wager
+			else
+				@answer.score = -@answer.wager
+			end
+		else
+			@answer.score = params[:status] == 1 ? @clue.value : 0
+		end
 		@answer.save
 		respond_to do |format|
 		    format.js   { render json: { new_user_score: @answer.user_current_score } }
@@ -35,6 +45,6 @@ class AnswersController < ApplicationController
 	private
 
 	def answer_params
-		params.require(:answer).permit(:user, :response, :wager, :status)
+		params.require(:answer).permit(:user, :response, :wager, :status, :score)
 	end
 end

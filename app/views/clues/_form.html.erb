@@ -45,13 +45,13 @@
 	<div class='row'>
 		<div class='form_group'>
 			<div class='col-sm-1'><%= f.label :week, class: 'control-label' %></div>
-			<div class='col-sm-11'><%= f.date_field :week, value: @clue.week? ? @clue.week : Date.today, class: 'form-control' %></div>
+			<div class='col-sm-11'><%= f.date_field :week, class: 'form-control' %></div>
 		</div>
 	</div>
 	<div class='row'>
 		<div class='form_group'>
 			<div class='col-sm-1'><%= f.label :seq, class: 'control-label' %></div>
-			<div class='col-sm-11'><%= f.text_field :seq, class: 'form-control' %></div>
+			<div class='col-sm-11'><%= f.number_field :seq, class: 'form-control' %></div>
 		</div>
 	</div>
 	<div class='row'>
