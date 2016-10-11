@@ -38,7 +38,7 @@ class AnswersController < ApplicationController
 	def get_user_score
 		@answer = Answer.find(params[:answer])
 		respond_to do |format|
-		    format.js   { render json: { user_score: @answer.user_current_score } }
+		    format.js   { render json: { score: @answer.user_current_score, prev_score: @answer.user_previous_score } }
 		end
 	end
 

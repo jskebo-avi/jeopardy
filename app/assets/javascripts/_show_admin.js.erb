@@ -1,24 +1,22 @@
 $(function() {
-  	$('.btn_correct').click(function() {
-	    var clue = $(this).attr("data-clue");
-	    var answer = $(this).attr("data-answer");
-	    var evalSuccessHandler = function(evalResponse) {
-	      	// because of how javascript 'this' scoping works (which you should totally research)
-	      	// the $(this).whatever will not refer to the clicked element anymore.
-	      	// so jquery offers a proxy function that defines a function with the 'this' scoped to the argument you give it.
-	      	// This is one of the sucky things about javascript.  :(  Sorry!
-	      	// see below where we're using $.proxy to wrap this function.
-	      	$(this).closest('tr').css("background-color", "chartreuse");
-	      	$(this).parent().siblings('.current_score').text(evalResponse.new_user_score);
-	      	var user = $(this).parent().siblings().closest(".answer-user").text();
+	var evaluate = function(status, btn){
+      	var clue = $(btn).attr("data-clue");
+    	var answer = $(btn).attr("data-answer");
+    	var color = status === 1 ? "chartreuse" : "tomato";
+		var evalSuccessHandler = function(evalResponse) {
+	      	$(btn).closest('tr').css("background-color", color);
+	      	$(btn).parent().siblings('.current_score').text(evalResponse.new_user_score);
+	      	var user = $(btn).parent().siblings().closest(".answer-user").text();
 
 	      	var scoreSuccessHandler = function(scoreResponse){
-	      		$(this).siblings('.current_score').text(scoreResponse.user_score)
+	      		$(this).siblings('.current_score').text(scoreResponse.score);
+	      		$(this).siblings('.previous_score').text(scoreResponse.prev_score);
 	      	}
-
+	      	
 	      	$(".answer-user").each(function(){
 	      		if($(this).text() === user){
 	      			var answer_id = $(this).parent().attr("id") //tr
+
 	      			$.ajax({
 				      	url: "/answers/get_user_score",
 				      	data: JSON.stringify({ answer: answer_id, user: user }),
@@ -35,7 +33,7 @@ $(function() {
 
 	    $.ajax({
 	      	url: "/answers/evaluate",
-	      	data: JSON.stringify({ clue: clue, answer: answer, status: 1 }),
+	      	data: JSON.stringify({ clue: clue, answer: answer, status: status }),
 	      	dataType: 'json',
 	      	contentType: 'application/json',
 	      	type: 'POST',
@@ -43,51 +41,11 @@ $(function() {
 	    .fail(function() {
 	      	debugger;
 	    });
-
-	    // you could probably think of something better here to indicate "loading"
-	    // because the above ajax call is anycronous, this line will execute before the success and error handlers do
-	    $(this).closest('tr').css("background-color", "yellow");
+	};
+  	$('.btn_correct').click(function() {
+  		evaluate(1, $(this));
   	});
 	$('.btn_incorrect').click(function() {
-	    var clue = $(this).attr("data-clue");
-	    var answer = $(this).attr("data-answer");
-	    var evalSuccessHandler = function(evalResponse) {
-	      	$(this).closest('tr').css("background-color", "tomato");
-	      	$(this).parent().siblings().closest('.current_score').text(evalResponse.new_user_score);
-	      	var user = $(this).parent().siblings().closest(".answer-user").text();
-
-	      	var scoreSuccessHandler = function(scoreResponse){
-	      		$(this).siblings('.current_score').text(scoreResponse.user_score)
-	      	}
-
-	      	$(".answer-user").each(function(){
-	      		if($(this).text() === user){
-	      			var answer_id = $(this).parent().attr("id") //tr
-	      			$.ajax({
-				      	url: "/answers/get_user_score",
-				      	data: JSON.stringify({ answer: answer_id, user: user }),
-				      	dataType: 'json',
-				      	contentType: 'application/json',
-				      	type: 'POST',
-				    }).done($.proxy(scoreSuccessHandler, this))
-				    .fail(function() {
-				      	debugger;
-				    });
-	      		}
-	      	})
-	    };
-
-	    $.ajax({
-	      	url: "/answers/evaluate",
-	      	data: JSON.stringify({ clue: clue, answer: answer, status: -1 }),
-	      	dataType: 'json',
-	      	contentType: 'application/json',
-	      	type: 'POST',
-	    }).done($.proxy(evalSuccessHandler, this))
-	    .fail(function() {
-	      	debugger;
-	    });
-
-	    $(this).closest('tr').css("background-color", "yellow");
+		evaluate(-1, $(this));
   	});
 });

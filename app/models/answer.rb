@@ -22,7 +22,7 @@ class Answer < ApplicationRecord
     #  where("clues.week = ? AND clues.seq < ? AND answers.user = ?
     #    AND clues.final = false AND answers.status = 1",
     #    clue[:week], clue[:seq], self[:user])
-    answers.sum(:value)
+    answers.sum(:score)
   end
 
   
