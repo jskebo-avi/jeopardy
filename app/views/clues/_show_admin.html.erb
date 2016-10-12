@@ -33,7 +33,7 @@
 						<% end %>
 						<td><button class="btn_correct" type="button" data-clue="<%= clue.id %>" data-answer="<%= answer.id %>">Correct</button></td>
 						<td><button class="btn_incorrect" type="button" data-clue="<%= clue.id %>" data-answer="<%= answer.id %>">Incorrect</button></td>
-						<td><button class="btn_delete" type="button" data-answer="<%= answer.id %>">Delete</button></td>
+						<td><button class="btn_delete" type="button" data-clue="<%= clue.id %>" data-answer="<%= answer.id %>">Delete</button></td>
 					</tr>
 				<% end %>
 			</table>

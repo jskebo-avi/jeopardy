@@ -10,11 +10,12 @@ class AnswersController < ApplicationController
 
 	def destroy
 		@clue = Clue.find(params[:clue_id])
-		@answer = @clue.answers.find(:id)
+		@answer = @clue.answers.find(params[:id])
 		@answer.destroy
 		respond_to do |format|
-		    format.js   {}
-		    format.html { redirect_to clues_url }
+	    format.js   {}
+	    format.html { redirect_to clues_url }
+		end
 	end
 
 	def evaluate
@@ -32,15 +33,15 @@ class AnswersController < ApplicationController
 		end
 		@answer.save
 		respond_to do |format|
-		    format.js   { render json: { new_user_score: @answer.user_current_score } }
-		    format.html { redirect_to clues_url }
+	    format.js   { render json: { new_user_score: @answer.user_current_score } }
+	    format.html { redirect_to clues_url }
 		end
 	end
 
 	def get_user_score
 		@answer = Answer.find(params[:answer])
 		respond_to do |format|
-		    format.js   { render json: { score: @answer.user_current_score, prev_score: @answer.user_previous_score } }
+	    format.js   { render json: { score: @answer.user_current_score, prev_score: @answer.user_previous_score } }
 		end
 	end
 
