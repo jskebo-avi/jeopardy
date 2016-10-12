@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   	resources :answers
   end
 
+  get 'history' => 'history#index', as: 'history'
   post 'answers/evaluate'
   post 'answers/get_user_score'
   root 'home#index'

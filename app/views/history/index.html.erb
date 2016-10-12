@@ -1,0 +1,20 @@
+<div class='container'>
+	<div class=-'row'>
+		<div class='col-xs-12' >
+			<h1 class='text-center'>This. Is. JEOPARDY!</h1>
+		</div>
+	</div>
+	<div class='row'>
+		<div class='col-xs-12' >
+			<table class='table'>
+				<% @clues.order(seq: :desc).each do |clue| %>
+					<tr>
+						<td>
+							<%= render partial: 'clues/show', locals: {clue: clue} %>
+						</td>
+					</tr>
+				<% end %>
+			</table>
+		</div>
+	</div>
+</div>
