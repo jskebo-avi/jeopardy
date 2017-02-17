@@ -2,6 +2,7 @@ class AnswersController < ApplicationController
 	def create
 		@clue = Clue.find(params[:clue_id])
 		@answer = @clue.answers.new(answer_params)
+		@answer.user_id = current_user.id
 		@answer.status = 0
 		@answer.score = 0
 		@answer.save
@@ -13,8 +14,9 @@ class AnswersController < ApplicationController
 		@answer = @clue.answers.find(:id)
 		@answer.destroy
 		respond_to do |format|
-		    format.js   {}
-		    format.html { redirect_to clues_url }
+	    format.js   {}
+	    format.html { redirect_to clues_url }
+		end
 	end
 
 	def evaluate
@@ -32,8 +34,8 @@ class AnswersController < ApplicationController
 		end
 		@answer.save
 		respond_to do |format|
-		    format.js   { render json: { new_user_score: @answer.user_current_score } }
-		    format.html { redirect_to clues_url }
+	    format.js   { render json: { new_user_score: @answer.user_current_score } }
+	    format.html { redirect_to clues_url }
 		end
 	end
 
@@ -47,6 +49,6 @@ class AnswersController < ApplicationController
 	private
 
 	def answer_params
-		params.require(:answer).permit(:user, :response, :wager, :status, :score)
+		params.require(:answer).permit(:user_id, :response, :wager, :status, :score)
 	end
 end

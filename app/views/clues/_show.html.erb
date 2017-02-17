@@ -1,10 +1,12 @@
 <div class='container'>
 	<div class='row'>
 		<div class='col-xs-6'>
-			<h3><%= clue.category + ' ' + clue.value.to_s %></h3>
-			<p>
-				<%= clue.text %>
-			</p>
+			<h3><%= clue.category + ' $' + clue.value.to_s %></h3>
+			<% if !current_user.nil? and current_user.current_clue_of_week.seq >= clue.seq %>
+				<p>
+					<%= clue.text %>
+				</p>
+			<% end %>
 		</div>
 		<div class='col-xs-6'>
 			<table class='table'>
@@ -17,18 +19,20 @@
 						<th>Final Score</th>
 					<% end %>
 				</tr>
-				<% clue.answers.sort_by{ |a| [-a.user_current_score, a.user] }.each do |answer| %>
-					<tr class="<%= case answer.status when 1 then 'answer-correct' when -1 then 'answer-incorrect' else 'answer-pending' end %>" id="<%= answer.id %>">
-						<td class="answer-user"><%= answer.user %></td>
-						<td><%= answer.response %></td>
-						<% if clue.final? %>
-							<td class='previous_score'><%= answer.user_previous_score %></td>
-							<td><%= answer.wager %></td>
-							<td class='current_score'><%= answer.user_current_score %></td>
-						<% else %>
-							<td class='current_score'><%= answer.user_current_score %></td>
-						<% end %>
-					</tr>
+				<% if !current_user.nil? and current_user.current_clue_of_week.seq > clue.seq %>
+					<% clue.answers.sort_by{ |a| [-a.user_current_score, a.user.name] }.each do |answer| %>
+						<tr class="<%= case answer.status when 1 then 'answer-correct' when -1 then 'answer-incorrect' else 'answer-pending' end %>" id="<%= answer.id %>">
+							<td class="answer-user" id="<%= answer.user_id %>"><%= answer.user.name %></td>
+							<td><%= answer.response %></td>
+							<% if clue.final? %>
+								<td class='previous_score'><%= answer.user_previous_score %></td>
+								<td><%= answer.wager %></td>
+								<td class='current_score'><%= answer.user_current_score %></td>
+							<% else %>
+								<td class='current_score'><%= answer.user_current_score %></td>
+							<% end %>
+						</tr>
+					<% end %>
 				<% end %>
 			</table>
 		</div>

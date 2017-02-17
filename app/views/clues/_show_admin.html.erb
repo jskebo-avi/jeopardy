@@ -1,7 +1,7 @@
 <div class='container'>
 	<div class='row'>
 		<div class='col-xs-6'>
-			<h3><%= link_to clue.category + ' ' + clue.value.to_s, edit_clue_path(clue) %></h3>
+			<h3><%= link_to clue.category + ' $' + clue.value.to_s, edit_clue_path(clue) %></h3>
 			<p>
 				<%= clue.text %>
 			</p>
@@ -20,9 +20,9 @@
 					<th></th>
 					<th></th>
 				</tr>
-				<% clue.answers.sort_by{ |a| [-a.user_current_score, a.user] }.each do |answer| %>
+				<% clue.answers.sort_by{ |a| [-a.user_current_score, a.user.name] }.each do |answer| %>
 					<tr class="<%= case answer.status when 1 then 'answer-correct' when -1 then 'answer-incorrect' else 'answer-pending' end %>" id="<%= answer.id %>">
-						<td class="answer-user"><%= answer.user %></td>
+						<td class="answer-user" id="<%= answer.user_id %>"><%= answer.user.name %></td>
 						<td><%= answer.response %></td>
 						<% if clue.final? %>
 							<td class='previous_score'><%= answer.user_previous_score %></td>

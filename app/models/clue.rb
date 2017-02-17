@@ -4,6 +4,8 @@ class Clue < ApplicationRecord
 
 	scope :of_week, -> (week_start) {where(week: week_start.beginning_of_week)}
 
+	Default_seq = 10
+
 	def week=(dt)
 		if dt.respond_to? :beginning_of_week
 			self[:week] = dt.beginning_of_week

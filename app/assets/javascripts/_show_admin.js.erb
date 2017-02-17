@@ -1,42 +1,42 @@
 $(function() {
 	var evaluate = function(status, btn){
-      	var clue = $(btn).attr("data-clue");
-    	var answer = $(btn).attr("data-answer");
-    	var trClass = status === 1 ? "answer-correct" : "answer-incorrect";
+  	var clue = $(btn).attr("data-clue");
+  	var answer = $(btn).attr("data-answer");
+  	var trClass = status === 1 ? "answer-correct" : "answer-incorrect";
 		var evalSuccessHandler = function(evalResponse){
-	      	$(btn).closest('tr').attr("class", trClass);
-	      	$(btn).parent().siblings('.current_score').text(evalResponse.new_user_score);
-	      	var user = $(btn).parent().siblings().closest(".answer-user").text();
+      	$(btn).closest('tr').attr("class", trClass);
+      	$(btn).parent().siblings('.current_score').text(evalResponse.new_user_score);
+      	var user = $(btn).parent().siblings().closest(".answer-user").id;
 
-	      	var scoreSuccessHandler = function(scoreResponse){
-	      		$(this).siblings('.current_score').text(scoreResponse.score);
-	      		$(this).siblings('.previous_score').text(scoreResponse.prev_score);
-	      	}
-	      	
-	      	$(".answer-user").each(function(){
-	      		if($(this).text() === user){
-	      			var answer_id = $(this).parent().attr("id") //tr
+      	var scoreSuccessHandler = function(scoreResponse){
+      		$(this).siblings('.current_score').text(scoreResponse.score);
+      		$(this).siblings('.previous_score').text(scoreResponse.prev_score);
+      	}
 
-	      			$.ajax({
-				      	url: "/answers/get_user_score",
-				      	data: JSON.stringify({ answer: answer_id, user: user }),
-				      	dataType: 'json',
-				      	contentType: 'application/json',
-				      	type: 'POST',
-				    }).done($.proxy(scoreSuccessHandler, this))
-				    .fail(function() {
-				      	debugger;
-				    });
-	      		}
-	      	})
+      	$(".answer-user").each(function(){
+      		if($(this).id === user){
+      			var answer_id = $(this).parent().attr("id") //tr
+
+      			$.ajax({
+			      	url: "/answers/get_user_score",
+			      	data: JSON.stringify({ answer: answer_id, user: user }),
+			      	dataType: 'json',
+			      	contentType: 'application/json',
+			      	type: 'POST',
+			    }).done($.proxy(scoreSuccessHandler, this))
+			    .fail(function() {
+			      	debugger;
+			    });
+      		}
+      	})
 	    };
 
 	    $.ajax({
-	      	url: "/answers/evaluate",
-	      	data: JSON.stringify({ clue: clue, answer: answer, status: status }),
-	      	dataType: 'json',
-	      	contentType: 'application/json',
-	      	type: 'POST',
+      	url: "/answers/evaluate",
+      	data: JSON.stringify({ clue: clue, answer: answer, status: status }),
+      	dataType: 'json',
+      	contentType: 'application/json',
+      	type: 'POST',
 	    }).done($.proxy(evalSuccessHandler, this))
 	    .fail(function() {
 	      	debugger;
@@ -49,7 +49,7 @@ $(function() {
 		evaluate(-1, $(this));
   	});
 
-  	
+
   	$('.btn_delete').click(function() {
   		var answer = $(this).attr("data-answer");
   		var deleteSuccessHandler = function(delResponse){

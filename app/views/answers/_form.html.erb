@@ -1,11 +1,11 @@
 <%= form_for([clue, clue.answers.build]) do |f| %>
 	<div class='container'>
 		<div class='row'>
-			<div class='col-sm-3 form_group'>
+			<!-- <div class='col-sm-3 form_group'>
 				<%= f.label :user, class: 'control-label' %>
 				<%= f.text_field :user, class: 'form-control' %>
-			</div>
-			<div class='col-sm-4 form_group'>
+			</div> -->
+			<div class='col-sm-7 form_group'>
 				<%= f.label :response, class: 'control-label' %>
 				<%= f.text_field :response, class: 'form-control' %>
 			</div>
@@ -17,7 +17,6 @@
 			<% end %>
 			<div class='col-sm-2 form_group'>
 				<%= f.submit 'Submit' %>
-			</div>
 			</div>
 		</div>
 	</div>
