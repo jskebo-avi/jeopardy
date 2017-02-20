@@ -1,14 +1,24 @@
 <div class='container'>
 	<div class='row'>
-		<div class='col-xs-6'>
-			<h3><%= clue.category + ' $' + clue.value.to_s %></h3>
+		<div class='col-xs-5'>
+			<div class='clearfix'>
+				<div class='pull-left'>
+					<h3><%= clue.category %></h3>
+				</div>
+				<div class='pull-right'>
+					<h3><%= ' $' + clue.value.to_s %></h3>
+				</div>
+			</div>
 			<% if !current_user.nil? and current_user.current_clue_of_week.seq >= clue.seq %>
 				<p>
 					<%= clue.text %>
 				</p>
 			<% end %>
+			<% if !current_user.nil? and current_user.clue_answered(clue.id) %>
+				<h4><%= clue.correct_answer %></h4>
+			<% end %>
 		</div>
-		<div class='col-xs-6'>
+		<div class='col-xs-7'>
 			<table class='table'>
 				<tr>
 					<th>Player</th>
@@ -19,7 +29,7 @@
 						<th>Final Score</th>
 					<% end %>
 				</tr>
-				<% if !current_user.nil? and current_user.current_clue_of_week.seq > clue.seq %>
+				<% if !current_user.nil? and current_user.clue_answered(clue.id) %>
 					<% clue.answers.sort_by{ |a| [-a.user_current_score, a.user.name] }.each do |answer| %>
 						<tr class="<%= case answer.status when 1 then 'answer-correct' when -1 then 'answer-incorrect' else 'answer-pending' end %>" id="<%= answer.id %>">
 							<td class="answer-user" id="<%= answer.user_id %>"><%= answer.user.name %></td>

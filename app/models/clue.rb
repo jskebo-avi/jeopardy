@@ -21,4 +21,8 @@ class Clue < ApplicationRecord
 	def text=(txt)
 		self[:text] = txt.upcase
 	end
+
+	def correct_answer=(ca)
+		self[:correct_answer] = ca.upcase
+	end
 end

@@ -50,21 +50,21 @@ $(function() {
   	});
 
 
-  	$('.btn_delete').click(function() {
-  		var answer = $(this).attr("data-answer");
-  		var deleteSuccessHandler = function(delResponse){
-  			$(this).parent().parent().remove();
-  		}
+	$('.btn_delete').click(function() {
+      var clue = $(this).attr("data-clue");
+		var answer = $(this).attr("data-answer");
+		var deleteSuccessHandler = function(delResponse){
+			$(this).parent().parent().fadeOut();
+		}
 
-  		$.ajax({
-	      	url: "/answers/" + answer,
-	      	data: {"_method":"delete"},
-	      	dataType: 'json',
-	      	contentType: 'application/json',
-	      	type: 'POST',
-	    }).done($.proxy(deleteSuccessHandler, this))
-	    .fail(function() {
-	      	debugger;
-	    });
-  	});
+		$.ajax({
+      	url: "clues/" + clue + "/answers/" + answer,
+      	data: {"_method":"delete"},
+      	dataType: 'json',
+      	type: 'POST',
+    }).done($.proxy(deleteSuccessHandler, this))
+    .fail(function() {
+      	debugger;
+    });
+	});
 });

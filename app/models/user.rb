@@ -23,7 +23,18 @@ class User < ApplicationRecord
         week_start, latest_complete_seq)
       .order(:seq)
       .first
+
+    if clue.nil?
+      clue = Clue.of_week(week_start).order(seq: :desc).first
+    end
+
     return clue
+  end
+
+  def clue_answered(clue_id)
+    answer = Answer.where("answers.clue_id = ? AND answers.user_id = ?",
+      clue_id, self[:id])
+    return !answer.empty?
   end
 
   # def latest_answered_clue_of_week(dt=Date.today)

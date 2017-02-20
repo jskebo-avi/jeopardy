@@ -11,7 +11,7 @@ class AnswersController < ApplicationController
 
 	def destroy
 		@clue = Clue.find(params[:clue_id])
-		@answer = @clue.answers.find(:id)
+		@answer = @clue.answers.find(params[:id])
 		@answer.destroy
 		respond_to do |format|
 	    format.js   {}

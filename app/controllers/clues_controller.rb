@@ -37,7 +37,7 @@ class CluesController < ApplicationController
 	def update
 		@clue = Clue.find(params[:id])
 		if @clue.update(clue_params)
-			redirect_to @clue
+			redirect_to clues_path
 		else
 			render 'edit'
 		end
@@ -52,6 +52,6 @@ class CluesController < ApplicationController
 	private
 
 	def clue_params
-		params.require(:clue).permit(:category, :text, :value, :final, :week, :seq)
+		params.require(:clue).permit(:category, :text, :value, :final, :week, :seq, :correct_answer)
 	end
 end

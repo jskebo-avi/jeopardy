@@ -11,7 +11,7 @@
 					<tr>
 						<td>
 							<%= render partial: 'clues/show', locals: {clue: clue} %>
-							<% if !current_user.nil? and current_user.current_clue_of_week.id == clue.id %>
+							<% if !current_user.nil? and !current_user.clue_answered(clue.id) and current_user.current_clue_of_week.id == clue.id %>
 								<br>
 								<%= render partial: 'answers/form', locals: {clue: clue} %>
 							<% end %>

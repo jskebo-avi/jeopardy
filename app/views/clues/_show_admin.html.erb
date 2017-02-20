@@ -1,10 +1,18 @@
 <div class='container'>
 	<div class='row'>
 		<div class='col-xs-6'>
-			<h3><%= link_to clue.category + ' $' + clue.value.to_s, edit_clue_path(clue) %></h3>
+			<div class='clearfix'>
+				<div class='pull-left'>
+					<h3><%= clue.category %></h3>
+				</div>
+				<div class='pull-right'>
+					<h3><%= ' $' + clue.value.to_s %></h3>
+				</div>
+			</div>
 			<p>
 				<%= clue.text %>
 			</p>
+			<h4><%= clue.correct_answer %></h4>
 		</div>
 		<div class='col-xs-6'>
 			<table class='table'>
@@ -33,7 +41,7 @@
 						<% end %>
 						<td><button class="btn_correct" type="button" data-clue="<%= clue.id %>" data-answer="<%= answer.id %>">Correct</button></td>
 						<td><button class="btn_incorrect" type="button" data-clue="<%= clue.id %>" data-answer="<%= answer.id %>">Incorrect</button></td>
-						<td><button class="btn_delete" type="button" data-answer="<%= answer.id %>">Delete</button></td>
+						<td><button class="btn_delete" type="button" data-clue="<%= clue.id %>" data-answer="<%= answer.id %>">Delete</button></td>
 					</tr>
 				<% end %>
 			</table>

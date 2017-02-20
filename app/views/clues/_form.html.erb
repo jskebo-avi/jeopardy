@@ -38,6 +38,12 @@
 	</div>
 	<div class='row'>
 		<div class='form_group'>
+			<div class='col-sm-1'><%= f.label :correct_answer, class: 'control-label' %></div>
+			<div class='col-sm-11'><%= f.text_field :correct_answer, class: 'form-control' %></div>
+		</div>
+	</div>
+	<div class='row'>
+		<div class='form_group'>
 			<div class='col-sm-1'><%= f.label :final, class: 'control-label' %></div>
 			<div class='col-sm-11'><%= f.check_box :final, class: 'form-control' %></div>
 		</div>
