@@ -1,7 +1,7 @@
 <%= form_for @clue do |f| %>
 	<div class='row'>
 		<div class='form_group'>
-			<div class='col-sm-12'>
+			<div class='col-md-12'>
 				<% if @clue.errors.any? %>
 					<div id="error_explanation">
 						<h2 style='color: red'>
@@ -20,48 +20,48 @@
 	</div>
 	<div class='row'>
 		<div class='form_group'>
-			<div class='col-sm-1'><%= f.label :category, class: 'control-label' %></div>
-			<div class='col-sm-11'><%= f.text_field :category, class: 'form-control' %></div>
+			<div class='col-md-1'><%= f.label :category, class: 'control-label' %></div>
+			<div class='col-md-11'><%= f.text_field :category, class: 'form-control' %></div>
 		</div>
 	</div>
 	<div class='row'>
 		<div class='form_group'>
-			<div class='col-sm-1'><%= f.label :value, class: 'control-label' %></div>
-			<div class='col-sm-11'><%= f.text_field :value, class: 'form-control' %></div>
+			<div class='col-md-1'><%= f.label :value, class: 'control-label' %></div>
+			<div class='col-md-11'><%= f.text_field :value, class: 'form-control' %></div>
 		</div>
 	</div>
 	<div class='row'>
 		<div class='form_group'>
-			<div class='col-sm-1'><%= f.label :text, class: 'control-label' %></div>
-			<div class='col-sm-11'><%= f.text_area :text, class: 'form-control' %></div>
+			<div class='col-md-1'><%= f.label :text, class: 'control-label' %></div>
+			<div class='col-md-11'><%= f.text_area :text, class: 'form-control' %></div>
 		</div>
 	</div>
 	<div class='row'>
 		<div class='form_group'>
-			<div class='col-sm-1'><%= f.label :correct_answer, class: 'control-label' %></div>
-			<div class='col-sm-11'><%= f.text_field :correct_answer, class: 'form-control' %></div>
+			<div class='col-md-1'><%= f.label :correct_answer, class: 'control-label' %></div>
+			<div class='col-md-11'><%= f.text_field :correct_answer, class: 'form-control' %></div>
 		</div>
 	</div>
 	<div class='row'>
 		<div class='form_group'>
-			<div class='col-sm-1'><%= f.label :final, class: 'control-label' %></div>
-			<div class='col-sm-11'><%= f.check_box :final, class: 'form-control' %></div>
+			<div class='col-md-1'><%= f.label :final, class: 'control-label' %></div>
+			<div class='col-md-11'><%= f.check_box :final, class: 'form-control' %></div>
 		</div>
 	</div>
 	<div class='row'>
 		<div class='form_group'>
-			<div class='col-sm-1'><%= f.label :week, class: 'control-label' %></div>
-			<div class='col-sm-11'><%= f.date_field :week, class: 'form-control' %></div>
+			<div class='col-md-1'><%= f.label :week, class: 'control-label' %></div>
+			<div class='col-md-11'><%= f.date_field :week, class: 'form-control' %></div>
 		</div>
 	</div>
 	<div class='row'>
 		<div class='form_group'>
-			<div class='col-sm-1'><%= f.label :seq, class: 'control-label' %></div>
-			<div class='col-sm-11'><%= f.number_field :seq, class: 'form-control' %></div>
+			<div class='col-md-1'><%= f.label :seq, class: 'control-label' %></div>
+			<div class='col-md-11'><%= f.number_field :seq, class: 'form-control' %></div>
 		</div>
 	</div>
 	<div class='row'>
-		<div class='col-sm-12'>
+		<div class='col-md-12'>
 			<div class='form_group' style='padding-top: 10px'>
 				<%= f.submit %>
 			</div>
