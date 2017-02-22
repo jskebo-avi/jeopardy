@@ -17,8 +17,8 @@ class User < ApplicationRecord
       .where("clues.week = ? AND answers.user_id = ?",
         week_start, self[:id])
       .includes(:answers)
-      .first  #it returns a collection of 1, easier to use later by grabbing the first
-      #.maximum(:seq)
+      .order(:seq)
+      .last
     if !latest_complete.nil? and latest_complete.final? and latest_complete.answers[0].response.nil?
       return latest_complete
     end
