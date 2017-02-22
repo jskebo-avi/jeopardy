@@ -5,7 +5,17 @@ class AnswersController < ApplicationController
 		@answer.user_id = current_user.id
 		@answer.status = 0
 		@answer.score = 0
+		if @answer.response.respond_to? :strip
+			@answer.response = @answer.response.strip()
+		end
 		@answer.save
+		redirect_to root_path
+	end
+
+	def update
+		@clue = Clue.find(params[:clue_id])
+		@answer = @clue.answers.find(params[:id])
+		@answer.update(answer_params)
 		redirect_to root_path
 	end
 
@@ -34,15 +44,16 @@ class AnswersController < ApplicationController
 		end
 		@answer.save
 		respond_to do |format|
-	    format.js   { render json: { new_user_score: @answer.user_current_score } }
+	    format.js   { render json: { new_user_score: @clue.user_current_score(@answer.user_id) } }
 	    format.html { redirect_to clues_url }
 		end
 	end
 
 	def get_user_score
 		@answer = Answer.find(params[:answer])
+		@clue = Clue.find(@answer.clue_id)
 		respond_to do |format|
-		    format.js   { render json: { score: @answer.user_current_score, prev_score: @answer.user_previous_score } }
+		    format.js   { render json: { score: @clue.user_current_score(@answer.user_id), prev_score: @clue.user_previous_score(@answer.user_id) } }
 		end
 	end
 

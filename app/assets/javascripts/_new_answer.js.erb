@@ -1,0 +1,32 @@
+document.addEventListener("turbolinks:load", function() {
+$(function() {
+  $("#wager_fld").change(function() {
+    var wager = parseInt($(this).val());
+    var max_wager = parseInt($(this).attr("data-max_wager"));
+    if(isNaN(wager) || wager < 0 || wager > max_wager) {
+      var btn = $("#btn_submit_answer")
+      btn.attr("disabled", true);
+      if(!btn.hasClass("disabled")) btn.addClass("disabled", true);
+    }
+    else {
+      var btn = $("#btn_submit_answer")
+      btn.attr("disabled", false);
+      if(btn.hasClass("disabled")) btn.removeClass("disabled", true);
+    }
+  });
+
+  $("#response_fld").change(function() {
+    var resp = $(this).val().trim();
+    if(resp !== "") {
+      var btn = $("#btn_submit_answer")
+      btn.attr("disabled", false);
+      if(btn.hasClass("disabled")) btn.removeClass("disabled", true);
+    }
+    else {
+      var btn = $("#btn_submit_answer")
+      btn.attr("disabled", true);
+      if(!btn.hasClass("disabled")) btn.addClass("disabled", true);
+    }
+  });
+});
+});

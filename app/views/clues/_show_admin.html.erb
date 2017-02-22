@@ -6,7 +6,7 @@
 					<h3><%= link_to clue.category, edit_clue_path(clue) %></h3>
 				</div>
 				<div class='pull-right'>
-					<h3><%= ' $' + clue.value.to_s %></h3>
+					<h3><%= clue.value_label %></h3>
 				</div>
 			</div>
 			<p>
@@ -28,20 +28,20 @@
 					<th></th>
 					<th></th>
 				</tr>
-				<% clue.answers.sort_by{ |a| [-a.user_current_score, a.user.name] }.each do |answer| %>
+				<% clue.answers.sort_by{ |a| [-clue.user_current_score(a.user.id), a.user.name] }.each do |answer| %>
 					<tr class="<%= case answer.status when 1 then 'answer-correct' when -1 then 'answer-incorrect' else 'answer-pending' end %>" id="<%= answer.id %>">
 						<td class="answer-user" id="<%= answer.user_id %>"><%= answer.user.name %></td>
 						<td><%= answer.response %></td>
 						<% if clue.final? %>
-							<td class='previous_score'><%= answer.user_previous_score %></td>
+							<td class='previous_score'><%= clue.user_previous_score(answer.user.id) %></td>
 							<td><%= answer.wager %></td>
-							<td class='current_score'><%= answer.user_current_score %></td>
+							<td class='current_score'><%= clue.user_current_score(answer.user.id) %></td>
 						<% else %>
-							<td class='current_score'><%= answer.user_current_score %></td>
+							<td class='current_score'><%= clue.user_current_score(answer.user.id) %></td>
 						<% end %>
-						<td><button class="btn_correct" type="button" data-clue="<%= clue.id %>" data-answer="<%= answer.id %>">Correct</button></td>
-						<td><button class="btn_incorrect" type="button" data-clue="<%= clue.id %>" data-answer="<%= answer.id %>">Incorrect</button></td>
-						<td><button class="btn_delete" type="button" data-clue="<%= clue.id %>" data-answer="<%= answer.id %>">Delete</button></td>
+						<td><button class="btn btn_correct" type="button" data-clue="<%= clue.id %>" data-answer="<%= answer.id %>">Correct</button></td>
+						<td><button class="btn btn_incorrect" type="button" data-clue="<%= clue.id %>" data-answer="<%= answer.id %>">Incorrect</button></td>
+						<td><button class="btn btn-danger btn_delete" type="button" data-clue="<%= clue.id %>" data-answer="<%= answer.id %>">Delete</button></td>
 					</tr>
 				<% end %>
 			</table>

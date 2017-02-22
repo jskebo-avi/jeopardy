@@ -13,11 +13,17 @@ class User < ApplicationRecord
       week_start = Date.parse(dt).beginning_of_week
     end
 
-    latest_complete_seq = Clue.joins(:answers)
+    latest_complete = Clue.joins(:answers)
       .where("clues.week = ? AND answers.user_id = ?",
         week_start, self[:id])
-      .maximum(:seq)
-    latest_complete_seq = latest_complete_seq.nil? ? 0 : latest_complete_seq
+      .includes(:answers)
+      .first  #it returns a collection of 1, easier to use later by grabbing the first
+      #.maximum(:seq)
+    if !latest_complete.nil? and latest_complete.final? and latest_complete.answers[0].response.nil?
+      return latest_complete
+    end
+
+    latest_complete_seq = latest_complete.nil? ? 0 : latest_complete.seq
 
     clue = Clue.where("clues.week = ? AND clues.seq > ?",
         week_start, latest_complete_seq)
@@ -32,9 +38,24 @@ class User < ApplicationRecord
   end
 
   def clue_answered(clue_id)
-    answer = Answer.where("answers.clue_id = ? AND answers.user_id = ?",
-      clue_id, self[:id])
-    return !answer.empty?
+    answer = Answer.includes(:clue).where("answers.clue_id = ? AND answers.user_id = ?",
+      clue_id, self[:id]).first
+    if answer.nil? or (answer.clue.final? and answer.response.nil?)
+      return false
+    end
+    return true
+  end
+
+  def clue_wagered(clue_id)
+    clue = Clue.joins(:answers)
+      .where("clues.id = ? AND answers.user_id = ?",
+        clue_id, self[:id])
+      .includes(:answers)
+      .first
+    if clue.nil? or !clue.final? or (clue.final? and clue.answers[0].nil?)
+      return false
+    end
+    return true
   end
 
   # def latest_answered_clue_of_week(dt=Date.today)

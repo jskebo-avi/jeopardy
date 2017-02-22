@@ -1,3 +1,4 @@
+document.addEventListener("turbolinks:load", function() {
 $(function() {
 	var evaluate = function(status, btn){
   	var clue = $(btn).attr("data-clue");
@@ -19,7 +20,7 @@ $(function() {
 
       			$.ajax({
 			      	url: "/answers/get_user_score",
-			      	data: JSON.stringify({ answer: answer_id, user: user }),
+			      	data: JSON.stringify({ answer: answer_id }),
 			      	dataType: 'json',
 			      	contentType: 'application/json',
 			      	type: 'POST',
@@ -42,20 +43,24 @@ $(function() {
 	      	debugger;
 	    });
 	};
-  	$('.btn_correct').click(function() {
-  		evaluate(1, $(this));
-  	});
+	$('.btn_correct').click(function() {
+		evaluate(1, $(this));
+	});
 	$('.btn_incorrect').click(function() {
 		evaluate(-1, $(this));
-  	});
+	});
 
 
 	$('.btn_delete').click(function() {
-      var clue = $(this).attr("data-clue");
+    var clue = $(this).attr("data-clue");
 		var answer = $(this).attr("data-answer");
 		var deleteSuccessHandler = function(delResponse){
 			$(this).parent().parent().fadeOut();
 		}
+
+		$(this).html("Deleting...");
+		$(this).attr("disabled", true);
+		$(this).addClass("disabled", true);
 
 		$.ajax({
       	url: "clues/" + clue + "/answers/" + answer,
@@ -67,4 +72,5 @@ $(function() {
       	debugger;
     });
 	});
+});
 });
