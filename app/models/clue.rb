@@ -31,7 +31,9 @@ class Clue < ApplicationRecord
 	end
 
 	def user_answer(user_id)
-		self.answers.find {|a| a.user_id = user_id}
+		answer = Answer.where("answers.clue_id = ? AND answers.user_id = ?",
+			self[:id], user_id).first
+		return answer
 	end
 
 	def user_current_score(user_id)
