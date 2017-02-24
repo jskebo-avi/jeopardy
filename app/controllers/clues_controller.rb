@@ -36,7 +36,7 @@ class CluesController < ApplicationController
 	def create
 		@clue = Clue.new(clue_params)
 		if @clue.save
-			redirect_to clues_path
+			redirect_to clues_path(day: @clue.week)
 		else
 			render 'new'
 		end
@@ -45,7 +45,7 @@ class CluesController < ApplicationController
 	def update
 		@clue = Clue.find(params[:id])
 		if @clue.update(clue_params)
-			redirect_to clues_path
+			redirect_to clues_path(day: @clue.week)
 		else
 			render 'edit'
 		end
@@ -53,8 +53,9 @@ class CluesController < ApplicationController
 
 	def destroy
 		@clue = Clue.find(params[:id])
+		day = @clue.week
 		@clue.destroy
-		redirect_to clues_path
+		redirect_to clues_path(day: day)
 	end
 
 	private

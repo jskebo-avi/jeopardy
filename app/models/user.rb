@@ -37,6 +37,27 @@ class User < ApplicationRecord
     return clue
   end
 
+  def latest_answered_of_week(dt=Date.today)
+    if dt.respond_to? :beginning_of_week
+      week_start = dt.beginning_of_week
+    else
+      week_start = Date.parse(dt).beginning_of_week
+    end
+
+    clues = Clue.joins(:answers)
+      .where("clues.week = ? AND answers.user_id = ?",
+        week_start, self[:id])
+      .includes(:answers)
+      .order(seq: :desc)
+    if clues.empty?
+      return nil
+    end
+    if clues[0].final? and clues[0].answers[0].response.nil?
+      return clues[1]
+    end
+    return clues[0]
+  end
+
   def clue_answered(clue_id)
     answer = Answer.includes(:clue).where("answers.clue_id = ? AND answers.user_id = ?",
       clue_id, self[:id]).first
