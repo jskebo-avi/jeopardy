@@ -6,7 +6,10 @@ class CluesController < ApplicationController
 	end
 
 	def index
-		@clues = Clue.all.eager_load(answers: :user)#of_week(Date.today)
+		@day = Date.parse(params[:day])
+		@clues = Clue.all.eager_load(answers: :user).of_week(@day)
+		@prev_week = @day.beginning_of_week - 7
+		@next_week = @day.beginning_of_week + 7
 	end
 
 	def show
@@ -14,14 +17,16 @@ class CluesController < ApplicationController
 	end
 
 	def new
+		@day = Date.parse(params[:day])
 		@clue = Clue.new
-		defSeq = Clue.where("week = ?", Date.today.beginning_of_week).maximum(:seq)
+		defSeq = Clue.where("week = ?", @day.beginning_of_week).maximum(:seq)
 		if defSeq.nil? then defSeq = Clue::Default_seq else defSeq += 10 end
 		@clue.seq = defSeq
-		@clue.week = Date.today
+		@clue.week = @day.beginning_of_week
 	end
 
 	def edit
+		@day = Date.parse(params[:day])
 		@clue = Clue.find(params[:id])
 	end
 

@@ -23,7 +23,7 @@
         <% end %>
         <li><a href="#">History</a></li>
         <% if user_signed_in? and current_user.admin? %>
-          <li><%= link_to "Admin", clues_path %></li>
+          <li><%= link_to "Admin", clues_path(day: Date.today) %></li>
         <% end %>
       </ul>
     </div><!-- /.navbar-collapse -->

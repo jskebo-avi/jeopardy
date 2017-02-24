@@ -1,21 +1,15 @@
 <div class='container'>
 	<div class='row'>
-		<div class='col-md-2'>
-			<%= link_to 'New clue', new_clue_path %>
+		<div class='col-md-12'>
+			<ul class="pager">
+			  <li class="previous"><%= link_to 'Previous Week', clues_path(day: @prev_week) %></li>
+				<li><%= link_to 'New Clue', new_clue_path(day: @day) %></li>
+			  <li class="next"><%= link_to 'Next Week', clues_path(day: @next_week) %></li>
+			</ul>
 		<div>
 	</div>
 	<div class='row'>
 		<div class='col-md-12'>
-			<!--<div class="dropdown open">
-			  	<button class="btn btn-secondary dropdown-toggle" type="button" id="weekDropDown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			   		Dropdown button
-			  	</button>
-			  	<div class="dropdown-menu" aria-labelledby="weekDropDown">
-			   		<a class="dropdown-item" href="#">Action</a>
-				    <a class="dropdown-item" href="#">Another action</a>
-				    <a class="dropdown-item" href="#">Something else here</a>
-			  	</div>
-			</div>-->
 			<table class='table'>
 				<% @clues.order(week: :desc, seq: :desc).each do |clue| %>
 					<tr>
