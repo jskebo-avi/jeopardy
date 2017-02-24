@@ -18,10 +18,13 @@ class CluesController < ApplicationController
 
 	def new
 		@day = Date.parse(params[:day])
+		lastClue = Clue.where("week = ?", @day.beginning_of_week).order(:seq).last
+		defSeq = lastClue.nil? ? Clue::Default_seq : lastClue.seq += Clue::Default_seq
+		defCat = lastClue.nil? ? "" : lastClue.category
+
 		@clue = Clue.new
-		defSeq = Clue.where("week = ?", @day.beginning_of_week).maximum(:seq)
-		if defSeq.nil? then defSeq = Clue::Default_seq else defSeq += 10 end
 		@clue.seq = defSeq
+		@clue.category = defCat
 		@clue.week = @day.beginning_of_week
 	end
 
