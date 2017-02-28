@@ -57,4 +57,24 @@ class Clue < ApplicationRecord
     #    clue[:week], clue[:seq], self[:user])
     answers.sum(:score)
   end
+
+	def winning_users
+		users = User.joins(answers: :clue)
+			.where("clues.week = ? AND clues.seq <= ?",
+				self[:week], self[:seq])
+			.group(:id)
+		winning_score = 0
+		winners = []
+		users.sort_by{ |u| [-self.user_current_score(u.id), u.name] }.each do |user|
+			score = self.user_current_score(user.id)
+			if score > winning_score
+				winning_score = score
+				winners.clear
+				winners.push(user.id)
+			elsif score == winning_score and !winners.include?(user.id)
+				winners.push(user.id)
+			end
+		end
+		return winners
+	end
 end

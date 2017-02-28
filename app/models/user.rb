@@ -85,4 +85,21 @@ class User < ApplicationRecord
         dt.beginning_of_week, self[:id])
     return pending_answers.empty?
   end
+
+  def winning_streak(week)
+    week = week.beginning_of_week
+    streak = 0
+    while true
+      last_clue = Clue.where("clues.week <= ?", week).order(week: :desc, seq: :desc).first
+      break if last_clue.nil?
+      winners = last_clue.winning_users
+      if winners.include?(self[:id])
+        streak += 1
+      else
+        break
+      end
+      week = last_clue.week - 7
+    end
+    return streak
+  end
 end

@@ -1,0 +1,15 @@
+<h4>Last Week's Winner<%= @last_winners.length > 1 ? "s" : "" %></h4>
+<table class='table'>
+  <tr>
+    <th>Player</th>
+    <th>Streak</th>
+  </tr>
+  <% if !current_user.nil? and !@last_winners.empty? %>
+    <% @last_winners.each do |winner| %>
+      <tr>
+        <td><%= winner.name %></td>
+        <td><%= winner.winning_streak(@prev_week) %></td>
+      </tr>
+    <% end %>
+  <% end %>
+</table>
