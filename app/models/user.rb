@@ -79,21 +79,10 @@ class User < ApplicationRecord
     return true
   end
 
-  # def latest_answered_clue_of_week(dt=Date.today)
-  #  if dt.respond_to? :beginning_of_week
-  #    week_start = dt.beginning_of_week
-  #  else
-  #    week_start = Date.parse(dt).beginning_of_week
-  #  end
-
-  #  defSeq = Clue.where("week = ?", week_start).minimum(:seq)
-  #  defSeq = defSeq.nil? ? Clue::Default_seq : defSeq
-
-  #  clue = Clue.joins(:answers)
-  #    .where("clues.week = ? AND answers.user_id = ?"
-  #      , week_start, self[:id])
-  #    .order(:seq)
-  #    .last
-  #  return clue
-  # end
+  def week_scored(dt=Date.today)
+    pending_answers = Answer.joins(:clue)
+      .where("clues.week = ? AND answers.user_id = ? AND answers.status = 0",
+        dt.beginning_of_week, self[:id])
+    return pending_answers.empty?
+  end
 end
