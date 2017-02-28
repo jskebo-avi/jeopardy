@@ -1,0 +1,47 @@
+<div class='container'>
+	<div class='row'>
+		<div class='col-md-12'>
+			<div class='text-center'>
+				<ul class="pagination">
+					<% if @prev_week2.nil? %>
+						<li class='disabled'><a href='#'>__________</a></li>
+					<% else %>
+						<li><%= link_to @prev_week2, history_path(day: @prev_week2) %></li>
+					<% end %>
+					<% if @prev_week.nil? %>
+						<li class='disabled'><a href='#'>__________</a></li>
+					<% else %>
+						<li><%= link_to @prev_week, history_path(day: @prev_week) %></li>
+					<% end %>
+					<li class='active'><%= link_to @day, history_path(day: @day) %></li>
+					<% if @next_week.nil? %>
+						<li class='disabled'><a href='#'>__________</a></li>
+					<% else %>
+						<li><%= link_to @next_week, history_path(day: @next_week) %></li>
+					<% end %>
+					<% if @next_week2.nil? %>
+						<li class='disabled'><a href='#'>__________</a></li>
+					<% else %>
+						<li><%= link_to @next_week2, history_path(day: @next_week2) %></li>
+					<% end %>
+				</ul>
+			</div>
+		<div>
+	</div>
+	<div class='row'>
+		<div class='col-md-4 col-md-offset-4'>
+			<%= render partial: 'clues/scoreboard' %>
+		</div>
+	</div>
+	<div class='row'>
+		<div class='col-md-12' >
+			<table class='table'>
+				<% @clues.order(seq: :desc).each do |clue| %>
+					<tr>
+						<td><%= render partial: 'clues/show_history', locals: {clue: clue} %></td>
+					</tr>
+				<% end %>
+			</table>
+		</div>
+	</div>
+</div>

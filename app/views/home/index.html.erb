@@ -6,20 +6,7 @@
 	</div>
 	<div class='row'>
 		<div class='col-md-4 col-md-offset-4'>
-			<table class='table'>
-				<tr>
-					<th>Player</th>
-					<th>Score</th>
-				</tr>
-				<% if !current_user.nil? and !@scoreClue.nil? %>
-					<% @scoreUsers.sort_by{ |u| [-@scoreClue.user_current_score(u.id), u.name] }.each do |user| %>
-						<tr>
-							<td><%= user.name %></td>
-							<td><%= @scoreClue.user_current_score(user.id) %></td>
-						</tr>
-					<% end %>
-				<% end %>
-			</table>
+			<%= render partial: 'clues/scoreboard' %>
 		</div>
 	</div>
 	<div class='row'>
