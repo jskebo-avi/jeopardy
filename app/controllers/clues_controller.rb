@@ -7,7 +7,7 @@ class CluesController < ApplicationController
 
 	def index
 		@day = Date.parse(params[:day])
-		@clues = Clue.all.eager_load(answers: :user).of_week(@day)
+		@clues = Clue.of_week(@day).eager_load(answers: :user)
 		@prev_week = @day.beginning_of_week - 7
 		@next_week = @day.beginning_of_week + 7
 	end

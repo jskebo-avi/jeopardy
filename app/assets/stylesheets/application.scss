@@ -1,6 +1,10 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+body {
+	font-family: Helvetica;
+}
+
 .answer-correct {
 	background-color: chartreuse;
 }

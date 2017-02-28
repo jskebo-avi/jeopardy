@@ -1,0 +1,15 @@
+<div class='container'>
+	<div class='row'>
+		<div class='col-md-12'>
+			<table class='table'>
+				<% @users.order(:name).each do |user| %>
+					<tr>
+						<td><%= link_to user.name, edit_user_path(user) %></td>
+						<td><%= user.email %></td>
+						<td><label><input type="checkbox" <%= user.admin? ? 'checked="checked"' : '' %> disabled='disabled'>Admin?</label></td>
+					</tr>
+				<% end %>
+			</table>
+		</div>
+	</div>
+</div>
