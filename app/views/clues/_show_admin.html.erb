@@ -1,21 +1,29 @@
 <div class='container'>
 	<div class='row'>
 		<div class='col-md-6'>
-			<div class='clearfix'>
-				<div class='pull-left'>
-					<h3><%= link_to clue.category, edit_clue_path(id: clue, day: @day) %></h3>
-				</div>
-				<div class='pull-right'>
-					<h3><%= clue.value_label %></h3>
-				</div>
-			</div>
-			<p>
-				<%= clue.text %>
-			</p>
-			<h4><%= clue.correct_answer %></h4>
+			<table class='table table-bordered'>
+				<tr><td>
+					<div class='clearfix'>
+						<div class='pull-left'>
+							<h3 class='j-header'><%= link_to clue.category, edit_clue_path(id: clue, day: @day) %></h3>
+						</div>
+						<div class='pull-right'>
+							<h3 class='j-score'><%= clue.value_label %></h3>
+						</div>
+					</div>
+				</td></tr>
+				<tr><td>
+					<p class='j-clue'>
+						<%= clue.text %>
+					</p>
+				</td></tr>
+				<tr><td>
+					<h5><%= clue.correct_answer %></h5>
+				</td></tr>
+			</table>
 		</div>
 		<div class='col-md-6'>
-			<table class='table'>
+			<table class='table table-bordered'>
 				<tr>
 					<th>Player</th>
 					<th>Response</th>
@@ -29,15 +37,15 @@
 					<th></th>
 				</tr>
 				<% clue.answers.sort_by{ |a| [-clue.user_current_score(a.user.id), a.user.name] }.each do |answer| %>
-					<tr class="<%= case answer.status when 1 then 'answer-correct' when -1 then 'answer-incorrect' else 'answer-pending' end %>" id="<%= answer.id %>">
+					<tr id="<%= answer.id %>">
 						<td class="answer-user" id="<%= answer.user_id %>"><%= answer.user.name %></td>
-						<td><%= answer.response %></td>
+						<td><div id='answer-response' class="<%= case answer.status when 1 then 'answer-correct' when -1 then 'answer-incorrect' else 'answer-pending' end %>"><%= answer.response %></div></td>
 						<% if clue.final? %>
-							<td class='previous_score'><%= clue.user_previous_score(answer.user.id) %></td>
-							<td><%= answer.wager %></td>
-							<td class='current_score'><%= clue.user_current_score(answer.user.id) %></td>
+							<td class='previous_score j-score text-right'>$<%= clue.user_previous_score(answer.user.id) %></td>
+							<td class='j-score text-right'>$<%= answer.wager %></td>
+							<td class='current_score j-score text-right'>$<%= clue.user_current_score(answer.user.id) %></td>
 						<% else %>
-							<td class='current_score'><%= clue.user_current_score(answer.user.id) %></td>
+							<td class='current_score j-score text-right'>$<%= clue.user_current_score(answer.user.id) %></td>
 						<% end %>
 						<td><button class="btn btn_correct" type="button" data-clue="<%= clue.id %>" data-answer="<%= answer.id %>">Correct</button></td>
 						<td><button class="btn btn_incorrect" type="button" data-clue="<%= clue.id %>" data-answer="<%= answer.id %>">Incorrect</button></td>

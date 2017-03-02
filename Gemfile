@@ -50,3 +50,4 @@ gem 'devise'
 
 gem 'pry'
 gem 'pry-nav'
+gem 'compass-rails'

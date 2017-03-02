@@ -1,21 +1,29 @@
 <div class='container'>
 	<div class='row'>
 		<div class='col-md-6'>
-			<div class='clearfix'>
-				<div class='pull-left'>
-					<h3><%= clue.category %></h3>
-				</div>
-				<div class='pull-right'>
-					<h3><%= clue.value_label %></h3>
-				</div>
-			</div>
-			<p>
-				<%= clue.text %>
-			</p>
-			<h4><%= clue.correct_answer %></h4>
+			<table class='table table-bordered'>
+				<tr><td>
+					<div class='clearfix'>
+						<div class='pull-left'>
+							<h3 class='j-header'><%= clue.category %></h3>
+						</div>
+						<div class='pull-right'>
+							<h3 class='j-score'><%= clue.value_label %></h3>
+						</div>
+					</div>
+				</td></tr>
+				<tr><td>
+					<p class='j-clue'>
+						<%= clue.text %>
+					</p>
+				</td></tr>
+				<tr><td>
+					<h5><%= clue.correct_answer %></h5>
+				</td></tr>
+			</table>
 		</div>
 		<div class='col-md-6'>
-			<table class='table'>
+			<table class='table table-bordered'>
 				<tr>
 					<th>Player</th>
 					<th>Response</th>
@@ -25,11 +33,11 @@
 				</tr>
 				<% if !current_user.nil? %>
 					<% clue.answers.sort_by{ |a| [-clue.user_current_score(a.user.id), a.user.name] }.each do |answer| %>
-						<tr class="<%= case answer.status when 1 then 'answer-correct' when -1 then 'answer-incorrect' else 'answer-pending' end %>" id="<%= answer.id %>">
+						<tr id="<%= answer.id %>">
 							<td class="answer-user" id="<%= answer.user_id %>"><%= answer.user.name %></td>
-							<td><%= answer.response %></td>
+							<td><div class="<%= case answer.status when 1 then 'answer-correct' when -1 then 'answer-incorrect' else 'answer-pending' end %>"><%= answer.response %></div></td>
 							<% if clue.final? %>
-								<td><%= answer.wager %></td>
+								<td class='j-score text-right'>$<%= answer.wager %></td>
 							<% end %>
 						</tr>
 					<% end %>

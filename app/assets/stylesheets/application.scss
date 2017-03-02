@@ -1,10 +1,4 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
-
-.answer-correct {
-	background-color: chartreuse;
-}
-
-.answer-incorrect {
-	background-color: tomato;
-}
+@import "compass/css3/images";
+@import "jeopardy.scss";

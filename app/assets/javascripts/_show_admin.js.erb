@@ -5,7 +5,7 @@ $(function() {
   	var answer = $(btn).attr("data-answer");
   	var trClass = status === 1 ? "answer-correct" : "answer-incorrect";
 		var evalSuccessHandler = function(evalResponse){
-      	$(btn).closest('tr').attr("class", trClass);
+      	$(btn).closest('tr').find('td > div').attr("class", trClass);
       	$(btn).parent().siblings('.current_score').text(evalResponse.new_user_score);
       	var user = $(btn).parent().siblings().closest(".answer-user").id;
 

@@ -1,0 +1,126 @@
+body {
+	font-family: Helvetica;
+	// Needs latest Compass, add '@import "compass"' to your scss
+	// Permalink - use to edit and share this gradient:
+	// http://colorzilla.com/gradient-editor/#ff6366+0,e56e70+4,d78edb+11,7d4cef+35,5519fc+62,2018f9+100
+	background-color: #ff6366; // Old browsers
+	@include filter-gradient(#ff6366, #2018f9, horizontal); // IE6-9 fallback on horizontal gradient
+	@include background-image(linear-gradient(left top, #ff6366 0%,#e56e70 4%,#d78edb 11%,#7d4cef 35%,#5519fc 62%,#2018f9 100%));
+}
+
+h4 {
+	font-weight: bold;
+	color: white;
+}
+
+h3 {
+	color: white;
+}
+
+h2 {
+	font-weight: bold;
+	color: white;
+}
+
+label {
+	color: white;
+}
+
+.navbar-default, .navbar-header a, .nav > li, .nav > li > a, .navbar-default .navbar-nav > li > a {
+	background-color: #060CE9;
+	color: white;
+}
+
+.dropdown li {
+	background-color: white;
+	color: black;
+}
+
+.j-background {
+	background-color: #060CE9;
+	color: white;
+	border: black solid 4px;
+}
+
+.table-bordered, .table .table-bordered {
+	background-color: #060CE9;
+	color: white;
+}
+
+.table-bordered > tbody > tr > td {
+	border: black solid 3px;
+}
+
+.table-bordered > tbody > tr > th {
+	border-bottom: black solid 5px;
+	border-left: black solid 3px;
+	border-right: black solid 3px;
+}
+
+.btn_correct {
+	background-color: chartreuse;
+	color: black;
+}
+
+.btn_incorrect {
+	background-color: tomato;
+	color: black;
+}
+
+.table-bordered {
+	border: black solid 5px;
+}
+
+.answer-correct {
+	border: chartreuse solid 3px;
+	padding: 4px;
+}
+
+.answer-incorrect {
+	border: tomato solid 3px;
+	padding: 4px;
+}
+
+.j-score {
+	font-weight: bold;
+}
+
+h3.j-score {
+	color: #e5c039;
+}
+
+.j-clue {
+	font-family: "Korinna", serif;
+	text-align: center;
+}
+
+.j-header {
+	font-weight: bold;
+}
+
+.j-header a {
+	color: white;
+}
+
+#j-logo {
+	width: 500px;
+	height: auto;
+}
+
+.pager li > a {
+	color: white;
+	background-color: #060CE9;
+	border: black solid 1px;
+}
+
+.pagination > li > a, .pagination > .disabled > a  {
+	color: white;
+	background-color: #060CE9;
+	border: black solid 1px;
+}
+
+.pagination > .active > a {
+	color: black;
+	background-color: white;
+	border: black solid 1px;
+}
