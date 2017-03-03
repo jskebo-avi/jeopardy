@@ -12,7 +12,7 @@
     <% @scoreUsers.sort_by{ |u| [-@scoreClue.user_current_score(u.id), u.name] }.each do |user| %>
       <tr>
         <td><%= user.name %></td>
-        <td class="j-score">$<%= @scoreClue.user_current_score(user.id) %></td>
+        <td class="j-score text-right">$<%= @scoreClue.user_current_score(user.id) %></td>
       </tr>
     <% end %>
   <% end %>

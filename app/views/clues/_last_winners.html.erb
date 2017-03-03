@@ -12,7 +12,7 @@
     <% @last_winners.each do |winner| %>
       <tr>
         <td><%= winner.name %></td>
-        <td><%= winner.winning_streak(@prev_week) %></td>
+        <td class='text-right'><%= winner.winning_streak(@prev_week) %></td>
       </tr>
     <% end %>
   <% end %>
