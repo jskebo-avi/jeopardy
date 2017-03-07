@@ -1,5 +1,6 @@
 body {
 	font-family: Helvetica;
+	font-size: 200%;
 	// Needs latest Compass, add '@import "compass"' to your scss
 	// Permalink - use to edit and share this gradient:
 	// http://colorzilla.com/gradient-editor/#ff6366+0,e56e70+4,d78edb+11,7d4cef+35,5519fc+62,2018f9+100
@@ -8,18 +9,33 @@ body {
 	@include background-image(linear-gradient(left top, #ff6366 0%,#e56e70 4%,#d78edb 11%,#7d4cef 35%,#5519fc 62%,#2018f9 100%));
 }
 
+.navbar-brand {
+	font-size: 120%;
+}
+
+h6 {
+	font-size: 80%;
+}
+
+h5 {
+	font-size: 120%;
+}
+
 h4 {
 	font-weight: bold;
 	color: white;
+	font-size: 115%;
 }
 
 h3 {
 	color: white;
+	font-size: 140%;
 }
 
 h2 {
 	font-weight: bold;
 	color: white;
+	font-size: 125%;
 }
 
 label {
@@ -45,6 +61,8 @@ label {
 .table-bordered, .table .table-bordered {
 	background-color: #060CE9;
 	color: white;
+	width: 100%;
+	margin: 0px auto;
 }
 
 .table-bordered > tbody > tr > td {
@@ -57,6 +75,10 @@ label {
 	border-right: black solid 3px;
 }
 
+.table-bordered {
+	border: black solid 5px;
+}
+
 .btn_correct {
 	background-color: chartreuse;
 	color: black;
@@ -65,10 +87,6 @@ label {
 .btn_incorrect {
 	background-color: tomato;
 	color: black;
-}
-
-.table-bordered {
-	border: black solid 5px;
 }
 
 .answer-correct {
@@ -103,7 +121,8 @@ h3.j-score {
 }
 
 #j-logo {
-	width: 500px;
+	width: 100%;
+	max-width: 550px;
 	height: auto;
 }
 

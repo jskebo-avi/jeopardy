@@ -1,4 +1,4 @@
-<div class='container'>
+<div class='container-fluid'>
 	<div class='row'>
 		<div class='col-md-6'>
 			<table class='table table-bordered'>
@@ -21,7 +21,7 @@
 				</td></tr>
 				<tr><td>
 					<% if !current_user.nil? and current_user.clue_answered(clue.id) %>
-						<h5><%= clue.correct_answer %></h5>
+						<h6 class='text-center'><%= clue.correct_answer %></h6>
 					<% end %>
 				</td></tr>
 			</table>
