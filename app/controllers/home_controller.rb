@@ -3,15 +3,19 @@ class HomeController < ApplicationController
   	@clues = Clue.of_week(Date.today).eager_load(answers: :user)
     if !current_user.nil?
       @userCurrentClue = current_user.current_clue_of_week
-      @scoreClue = Clue.where("clues.week = ? AND clues.seq < ?",
-          Date.today.beginning_of_week, @userCurrentClue.seq)
-        .order(seq: :desc)
-        .first
+      if current_user.clue_answered(@userCurrentClue.id)
+        @scoreClue = @userCurrentClue
+      else
+        @scoreClue = Clue.where("clues.week = ? AND clues.seq < ?",
+            Date.today.beginning_of_week, @userCurrentClue.seq)
+          .order(seq: :desc)
+          .first
+      end
     else
       @userCurrentClue = nil
       @scoreClue = nil
     end
-    
+
     if @scoreClue.nil?
       @scoreUsers = nil
     else
