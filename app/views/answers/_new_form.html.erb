@@ -12,7 +12,7 @@
 					<%= f.text_field :wager, class: 'form-control', id: 'wager_fld',
 						'data-max_wager' => clue.user_current_score(current_user.id),
 						disabled: !current_user.week_scored %>
-					<% if current_user.week_scored %>
+					<% if clue.week_scored %>
 						<short>Your maximum bet: <%= clue.user_current_score(current_user.id) %></short>
 					<% else %>
 						<short>Cannot set wager until all previous answers have been scored by an admin.</short>

@@ -34,6 +34,13 @@ class User < ApplicationRecord
       clue = Clue.of_week(week_start).order(seq: :desc).first
     end
 
+    #check if a final later than this clue exists, if so, that's their current
+    #and they're locked out of previous unanswered
+    final = Clue.where("clues.week = ? AND clues.final = true", week_start).first
+    if !final.nil? and final.seq > clue.seq
+      return final
+    end
+
     return clue
   end
 

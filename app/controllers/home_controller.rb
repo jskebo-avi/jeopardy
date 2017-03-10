@@ -1,7 +1,17 @@
 class HomeController < ApplicationController
   def index
   	@clues = Clue.of_week(Date.today).eager_load(answers: :user)
-    @scoreClue = current_user.nil? ? nil : current_user.latest_answered_of_week(Date.today)
+    if !current_user.nil?
+      @userCurrentClue = current_user.current_clue_of_week
+      @scoreClue = Clue.where("clues.week = ? AND clues.seq < ?",
+          Date.today.beginning_of_week, @userCurrentClue.seq)
+        .order(seq: :desc)
+        .first
+    else
+      @userCurrentClue = nil
+      @scoreClue = nil
+    end
+    
     if @scoreClue.nil?
       @scoreUsers = nil
     else

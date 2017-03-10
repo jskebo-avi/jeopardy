@@ -40,10 +40,6 @@ class Clue < ApplicationRecord
     answers = Answer.joins(:clue).
       where("clues.week = ? AND clues.seq <= ? AND answers.user_id = ?",
         self[:week], self[:seq], user_id)
-    #clues = Clue.joins(:answers).
-    #  where("clues.week = ? AND clues.seq <= ? AND answers.user = ?
-    #    AND clues.final = false AND answers.status = 1",
-    #    clue[:week], clue[:seq], self[:user])
     answers.sum(:score)
   end
 
@@ -51,11 +47,13 @@ class Clue < ApplicationRecord
     answers = Answer.joins(:clue).
       where("clues.week = ? AND clues.seq < ? AND answers.user_id = ?",
         self[:week], self[:seq], user_id)
-    #clues = Clue.joins(:answers).
-    #  where("clues.week = ? AND clues.seq < ? AND answers.user = ?
-    #    AND clues.final = false AND answers.status = 1",
-    #    clue[:week], clue[:seq], self[:user])
     answers.sum(:score)
+  end
+
+  def week_scored()
+    pending_answers = Answer.joins(:clue)
+      .where("clues.week = ? AND answers.status = 0", self[:week])
+    return pending_answers.empty?
   end
 
 	def winning_users

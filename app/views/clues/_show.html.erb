@@ -14,13 +14,13 @@
 				</td></tr>
 				<tr><td>
 					<p class='j-clue'>
-						<% if !current_user.nil? and current_user.current_clue_of_week.seq >= clue.seq and (!clue.final? or current_user.clue_wagered(clue.id)) %>
+						<% if !current_user.nil? and @userCurrentClue.seq >= clue.seq and (!clue.final? or current_user.clue_wagered(clue.id)) %>
 							<%= clue.text %>
 						<% end %>
 					</p>
 				</td></tr>
 				<tr><td>
-					<% if !current_user.nil? and current_user.clue_answered(clue.id) %>
+					<% if !current_user.nil? and (current_user.clue_answered(clue.id) or @userCurrentClue.seq > clue.seq) %>
 						<h6 class='text-center'><%= clue.correct_answer %></h6>
 					<% end %>
 				</td></tr>
@@ -31,23 +31,17 @@
 				<tr>
 					<th>Player</th>
 					<th>Response</th>
-					<!--<th>Score</th>-->
 					<% if clue.final? %>
 						<th>Wager</th>
-						<!--<th>Final Score</th>-->
 					<% end %>
 				</tr>
-				<% if !current_user.nil? and current_user.clue_answered(clue.id) %>
+				<% if !current_user.nil? and (current_user.clue_answered(clue.id) or @userCurrentClue.seq > clue.seq) %>
 					<% clue.answers.sort_by{ |a| [-clue.user_current_score(a.user.id), a.user.name] }.each do |answer| %>
 						<tr id="<%= answer.id %>">
 							<td class="answer-user" id="<%= answer.user_id %>"><%= answer.user.name %></td>
 							<td><div class="<%= case answer.status when 1 then 'answer-correct' when -1 then 'answer-incorrect' else 'answer-pending' end %>"><%= answer.response %></div></td>
 							<% if clue.final? %>
-								<!--<td class='previous_score'><%= clue.user_previous_score(answer.user.id) %></td>-->
 								<td class='j-score text-right'>$<%= answer.wager %></td>
-								<!--<td class='current_score'><%= clue.user_current_score(answer.user.id) %></td>-->
-							<% else %>
-								<!--<td class='current_score'><%= clue.user_current_score(answer.user.id) %></td>-->
 							<% end %>
 						</tr>
 					<% end %>
