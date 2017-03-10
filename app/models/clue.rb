@@ -52,7 +52,7 @@ class Clue < ApplicationRecord
 
   def week_scored()
     pending_answers = Answer.joins(:clue)
-      .where("clues.week = ? AND answers.status = 0", self[:week])
+      .where("clues.week = ? AND clues.seq < ? AND answers.status = 0", self[:week], self[:seq])
     return pending_answers.empty?
   end
 
