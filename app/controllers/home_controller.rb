@@ -3,7 +3,9 @@ class HomeController < ApplicationController
   	@clues = Clue.of_week(Date.today).eager_load(answers: :user)
     if !current_user.nil?
       @userCurrentClue = current_user.current_clue_of_week
-      if current_user.clue_answered(@userCurrentClue.id)
+      if @userCurrentClue.nil?
+        @scoreClue = nil
+      elsif current_user.clue_answered(@userCurrentClue.id)
         @scoreClue = @userCurrentClue
       else
         @scoreClue = Clue.where("clues.week = ? AND clues.seq < ?",
