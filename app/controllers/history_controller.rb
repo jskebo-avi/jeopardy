@@ -12,7 +12,7 @@ class HistoryController < ApplicationController
         .group(:id)
     end
 
-    prev_week_clue = Clue.where("clues.week < ?", @day).order(week: :desc).first
+    prev_week_clue = Clue.where("clues.week < ?", @day).order(week: :desc, seq: :desc).first
     if prev_week_clue.nil?
       @prev_week =  nil
       @last_winners = []
@@ -20,7 +20,7 @@ class HistoryController < ApplicationController
     else
       @prev_week = prev_week_clue.week
       @last_winners = User.where(id: prev_week_clue.winning_users).order(:name)
-      prev_week2_clue = Clue.where("clues.week < ?", @prev_week).order(week: :desc).first
+      prev_week2_clue = Clue.where("clues.week < ?", @prev_week).order(week: :desc, seq: :desc).first
       @prev_week2 = prev_week2_clue.nil? ? nil : prev_week2_clue.week
     end
 
