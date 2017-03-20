@@ -34,7 +34,9 @@
 				<% if !current_user.nil? %>
 					<% clue.answers.sort_by{ |a| [-clue.user_current_score(a.user.id), a.user.name] }.each do |answer| %>
 						<tr id="<%= answer.id %>">
-							<td class="answer-user" id="<%= answer.user_id %>"><%= answer.user.name %></td>
+							<td class="answer-user" id="<%= answer.user_id %>"><%= answer.user.name %>
+								<% if @last_winners.any? {|u| u.id == answer.user_id} %> <%= image_tag('thinker.gif', id: 'thinker') %> <% end %>
+							</td>
 							<td><div class="<%= case answer.status when 1 then 'answer-correct' when -1 then 'answer-incorrect' else 'answer-pending' end %>"><%= answer.response %></div></td>
 							<% if clue.final? %>
 								<td class='j-score text-right'>$<%= answer.wager %></td>
