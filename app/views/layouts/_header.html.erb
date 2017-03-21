@@ -21,7 +21,7 @@
           <li><%= link_to "Sign Up", new_user_registration_path %></li>
           <li><%= link_to "Login", new_user_session_path %></li>
         <% end %>
-        <li><%= link_to "History", history_path(day: (Date.today.beginning_of_week - 7)) %></li>
+        <li><%= link_to "History", history_path(day: @history_week) %></li>
         <% if user_signed_in? and current_user.admin? %>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>

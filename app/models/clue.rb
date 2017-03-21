@@ -6,6 +6,10 @@ class Clue < ApplicationRecord
 
 	Default_seq = 10
 
+	def self.prev_week_last_clue(dt)
+		Clue.where("clues.week < ?", dt.beginning_of_week).order(week: :desc, seq: :desc).first
+	end
+
 	def week=(dt)
 		if dt.respond_to? :beginning_of_week
 			self[:week] = dt.beginning_of_week
@@ -41,7 +45,7 @@ class Clue < ApplicationRecord
       where("clues.week = ? AND clues.seq <= ? AND answers.user_id = ?",
         self[:week], self[:seq], user_id)
     answers.sum(:score)
-  end
+	end
 
   def user_previous_score(user_id)
     answers = Answer.joins(:clue).
@@ -50,7 +54,7 @@ class Clue < ApplicationRecord
     answers.sum(:score)
   end
 
-  def week_scored()
+  def week_scored
     pending_answers = Answer.joins(:clue)
       .where("clues.week = ? AND clues.seq < ? AND answers.status = 0", self[:week], self[:seq])
     return pending_answers.empty?

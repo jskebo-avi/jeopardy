@@ -27,7 +27,8 @@ class HomeController < ApplicationController
         .group(:id)
     end
 
-    last_week_clue = Clue.where("clues.week < ?", Date.today.beginning_of_week).order(week: :desc, seq: :desc).first
+    #last_week_clue = Clue.where("clues.week < ?", Date.today.beginning_of_week).order(week: :desc, seq: :desc).first
+    last_week_clue = Clue.prev_week_last_clue(Date.today)
     if last_week_clue.nil?
       @prev_week = nil
       @last_winners = []
