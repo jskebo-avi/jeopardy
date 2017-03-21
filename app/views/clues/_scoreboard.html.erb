@@ -11,7 +11,9 @@
   <% if !current_user.nil? and !@scoreClue.nil? %>
     <% @scoreUsers.sort_by{ |u| [-@scoreClue.user_current_score(u.id), u.name] }.each do |user| %>
       <tr>
-        <td><%= user.name %></td>
+        <td><%= user.name %>
+          <% if @last_winners.any? {|u| u.id == user.id} %> <%= image_tag('thinker.gif', id: 'thinker') %> <% end %>
+        </td>
         <td class="j-score text-right">$<%= @scoreClue.user_current_score(user.id) %></td>
       </tr>
     <% end %>
