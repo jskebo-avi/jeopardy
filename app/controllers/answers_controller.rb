@@ -1,4 +1,10 @@
 class AnswersController < ApplicationController
+	def edit
+		@day = Date.parse(params[:day])
+		@clue = Clue.find(params[:clue_id])
+		@answer = @clue.answers.find(params[:id])
+	end
+
 	def create
 		@clue = Clue.find(params[:clue_id])
 		@answer = @clue.answers.new(answer_params)
@@ -16,7 +22,11 @@ class AnswersController < ApplicationController
 		@clue = Clue.find(params[:clue_id])
 		@answer = @clue.answers.find(params[:id])
 		@answer.update(answer_params)
-		redirect_to root_path
+		if params[:admin_update]
+			redirect_to clues_path(day: @clue.week)
+		else
+			redirect_to root_path
+		end
 	end
 
 	def destroy

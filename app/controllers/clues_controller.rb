@@ -1,5 +1,4 @@
 class CluesController < ApplicationController
-	#http_basic_authenticate_with name: "admin", password: "trebek", except: :show
 	before_filter :authenticate_user!
 	before_filter do
 		redirect_to root_path unless current_user && current_user.admin?
@@ -18,8 +17,7 @@ class CluesController < ApplicationController
 
 	def new
 		@day = Date.parse(params[:day])
-		#lastClue = Clue.where("week = ?", @day.beginning_of_week).order(:seq).last
-		lastClue = Clue.prev_week_last_clue(@day)
+		lastClue = Clue.where("week = ?", @day.beginning_of_week).order(:seq).last
 		defSeq = lastClue.nil? ? Clue::Default_seq : lastClue.seq += Clue::Default_seq
 		defCat = lastClue.nil? ? "" : lastClue.category
 

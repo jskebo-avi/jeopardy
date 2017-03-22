@@ -2,7 +2,7 @@
 	<div class='row'>
 		<div class='col-md-12'>
 			<h3>Editing Clue...</h3>
-			<h4><%= @clue.category + " " + @clue.value.to_s %></h4>
+			<h4><%= @clue.category + " " + @clue.value_label %></h4>
 		</div>
 	</div>
 	<div class='row'>
@@ -19,7 +19,7 @@
 	</div>
 	<div class='row'>
 		<div class='col-md-6' style='padding-top: 20px'>
-			<%= link_to 'Back', clues_path(day: @day) %>
+			<%= link_to 'Back', clues_path(day: @day), class: 'btn btn-default' %>
 		</div>
 	</div>
 </div>
