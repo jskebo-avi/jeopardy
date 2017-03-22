@@ -43,7 +43,7 @@
 							</td>
 							<td><div class="<%= case answer.status when 1 then 'answer-correct' when -1 then 'answer-incorrect' else 'answer-pending' end %>"><%= answer.response %></div></td>
 							<% if clue.final? %>
-								<td class='j-score text-right'>$<%= answer.wager %></td>
+								<td class='j-score text-right'>$<%= number_with_delimiter(answer.wager) %></td>
 							<% end %>
 						</tr>
 					<% end %>

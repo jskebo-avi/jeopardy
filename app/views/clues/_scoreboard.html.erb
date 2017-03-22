@@ -14,7 +14,7 @@
         <td><%= user.name %>
           <% if @last_winners.any? {|u| u.id == user.id} %> <%= image_tag('thinker.gif', id: 'thinker') %> <% end %>
         </td>
-        <td class="j-score text-right">$<%= @scoreClue.user_current_score(user.id) %></td>
+        <td class="j-score text-right">$<%= number_with_delimiter(@scoreClue.user_current_score(user.id)) %></td>
       </tr>
     <% end %>
   <% end %>
