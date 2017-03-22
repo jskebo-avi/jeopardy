@@ -25,10 +25,10 @@
 		<div class='col-md-6'>
 			<table class='table table-bordered'>
 				<tr>
-					<th>Player</th>
+					<th class='col-player'>Player</th>
 					<th>Response</th>
 					<% if clue.final? %>
-						<th>Wager</th>
+						<th class='col-wager'>Wager</th>
 					<% end %>
 				</tr>
 				<% if !current_user.nil? %>
