@@ -1,6 +1,7 @@
 body {
 	font-family: Helvetica;
 	font-size: 200%;
+	color: white;
 	// Needs latest Compass, add '@import "compass"' to your scss
 	// Permalink - use to edit and share this gradient:
 	// http://colorzilla.com/gradient-editor/#ff6366+0,e56e70+4,d78edb+11,7d4cef+35,5519fc+62,2018f9+100
@@ -42,9 +43,22 @@ label {
 	color: white;
 }
 
+short {
+	font-size: 80%;
+}
+
+.row .flex_row {
+	display: flex;
+	align-items: flex-end;
+}
+
 .navbar-default, .navbar-header a, .nav > li, .nav > li > a, .navbar-default .navbar-nav > li > a {
 	background-color: #060CE9;
 	color: white;
+}
+
+.navbar-default .navbar-nav > li > a:hover, .navbar-header a:hover {
+	color: #e5c039;
 }
 
 .dropdown li {
@@ -93,16 +107,6 @@ label {
 	width: 17%;
 }
 
-.btn_correct {
-	background-color: chartreuse;
-	color: black;
-}
-
-.btn_incorrect {
-	background-color: tomato;
-	color: black;
-}
-
 .answer-correct {
 	border: chartreuse solid 3px;
 	padding: 4px;
@@ -146,14 +150,43 @@ h3.j-score {
 	border: black solid 1px;
 }
 
+.pager li > a:hover {
+	color: black;
+	border: black solid 1px;
+}
+
 .pagination > li > a, .pagination > .disabled > a  {
 	color: white;
 	background-color: #060CE9;
 	border: black solid 1px;
 }
 
-.pagination > .active > a {
+.pagination > .active > a, .pagination > .active > a:hover {
 	color: black;
 	background-color: white;
 	border: black solid 1px;
+}
+
+.btn {
+	color: black;
+}
+
+.btn_correct {
+	background-color: chartreuse;
+	color: black;
+}
+
+.btn_correct:hover {
+	background-color: #71e200;
+	color: white;
+}
+
+.btn_incorrect {
+	background-color: tomato;
+	color: black;
+}
+
+.btn_incorrect:hover {
+	background-color: #ef5134;
+	color: white;
 }

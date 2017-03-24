@@ -1,6 +1,6 @@
 <%= form_for([clue, clue.answers.build]) do |f| %>
 	<div class='container'>
-		<div class='row'>
+		<div class='row flex_row' >
 			<% if !clue.final? %>
 				<div class='col-md-7 form_group'>
 					<%= f.label :response, class: 'control-label' %>
@@ -9,14 +9,14 @@
 			<% else %>
 				<div class='col-md-3 form_group'>
 					<%= f.label :wager, class: 'control-label' %>
-					<%= f.text_field :wager, class: 'form-control', id: 'wager_fld',
-						'data-max_wager' => clue.user_current_score(current_user.id),
-						disabled: !current_user.week_scored %>
 					<% if clue.week_scored %>
 						<short>Your maximum bet: <%= number_with_delimiter(clue.user_current_score(current_user.id)) %></short>
 					<% else %>
 						<short>Cannot set wager until all previous answers have been scored by an admin.</short>
 					<% end %>
+					<%= f.text_field :wager, class: 'form-control', id: 'wager_fld',
+						'data-max_wager' => clue.user_current_score(current_user.id),
+						disabled: !current_user.week_scored %>
 				</div>
 			<% end %>
 			<div class='col-md-2 form_group'>
