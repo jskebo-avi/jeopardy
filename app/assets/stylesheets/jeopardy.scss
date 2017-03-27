@@ -9,10 +9,10 @@ body {
 	color: white;
 	// Needs latest Compass, add '@import "compass"' to your scss
 	// Permalink - use to edit and share this gradient:
-	// http://colorzilla.com/gradient-editor/#ff6366+0,e56e70+4,d78edb+11,7d4cef+35,5519fc+62,2018f9+100
+	// http://colorzilla.com/gradient-editor/#ff1418+0,ff6366+1,e56e70+4,d78edb+8,7d4cef+35,5519fc+55,2018f9+100
 	background-color: #2018f9; // Old browsers
-	@include filter-gradient(#d78edb, #2018f9, horizontal); // IE6-9 fallback on horizontal gradient
-	@include background-image(linear-gradient(left top, #ff6366 0%,#e56e70 4%,#d78edb 11%,#7d4cef 35%,#5519fc 62%,#2018f9 100%));
+	@include filter-gradient(#7d4cef, #2018f9, horizontal); // IE6-9 fallback on horizontal gradient
+	@include background-image(linear-gradient(left top, #ff1418 0%, #ff6366 1%,#e56e70 4%,#d78edb 8%,#7d4cef 35%,#5519fc 55%,#2018f9 100%));
 }
 
 .navbar-brand {
