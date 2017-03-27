@@ -1,3 +1,8 @@
+html, body {
+    margin: 0;
+    height: 100%;
+}
+
 body {
 	font-family: Helvetica;
 	font-size: 200%;
@@ -5,8 +10,8 @@ body {
 	// Needs latest Compass, add '@import "compass"' to your scss
 	// Permalink - use to edit and share this gradient:
 	// http://colorzilla.com/gradient-editor/#ff6366+0,e56e70+4,d78edb+11,7d4cef+35,5519fc+62,2018f9+100
-	background-color: #ff6366; // Old browsers
-	@include filter-gradient(#ff6366, #2018f9, horizontal); // IE6-9 fallback on horizontal gradient
+	background-color: #2018f9; // Old browsers
+	@include filter-gradient(#d78edb, #2018f9, horizontal); // IE6-9 fallback on horizontal gradient
 	@include background-image(linear-gradient(left top, #ff6366 0%,#e56e70 4%,#d78edb 11%,#7d4cef 35%,#5519fc 62%,#2018f9 100%));
 }
 
