@@ -94,7 +94,11 @@ class User < ApplicationRecord
   end
 
   def winning_streak(week)
-    week = week.beginning_of_week
+    if week.respond_to? :beginning_of_week
+      week = week.beginning_of_week
+    else
+      week = Date.parse(week).beginning_of_week
+    end
     streak = 0
     while true
       last_clue = Clue.where("clues.week <= ?", week).order(week: :desc, seq: :desc).first
@@ -108,5 +112,57 @@ class User < ApplicationRecord
       week = last_clue.week - 7
     end
     return streak
+  end
+
+  def winner?(week)
+    if week.respond_to? :beginning_of_week
+      week = week.beginning_of_week
+    else
+      week = Date.parse(week).beginning_of_week
+    end
+    last_clue = Clue.of_week(week).order(seq: :desc).first
+    return false if last_clue.nil?
+    winners = last_clue.winning_users
+    return winners.include?(self[:id])
+  end
+
+  def longest_streak
+    max_streak = 0
+    streak = 0
+    last_clues = Clue.last_clues
+    last_clues.each do |c|
+      winners = c.winning_users
+      if winners.include?(self[:id])
+        streak += 1
+      else
+        if streak > max_streak
+          max_streak = streak
+        end
+        streak = 0
+      end
+    end
+    if streak > max_streak
+      max_streak = streak
+    end
+    return max_streak
+  end
+
+  def win_count
+    wins = 0
+    last_clues = Clue.last_clues
+    last_clues.each do |c|
+      winners = c.winning_users
+      if winners.include?(self[:id])
+        wins += 1
+      end
+    end
+    return wins
+  end
+
+  def win_pct
+    weeks_in = Clue.joins(:answers).where("answers.user_id = :user", user: self[:id]).select(:week).distinct(:week).count
+    weeks_won = self.win_count
+    pct = weeks_in == 0 ? 0 : weeks_won.to_f/weeks_in
+    return pct
   end
 end

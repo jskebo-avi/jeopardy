@@ -1,0 +1,19 @@
+<div class='container'>
+  <div class='row'>
+    <div class='col-md-12'>
+      <h3><%= @user.name %></h3>
+    </div>
+  </div>
+	<div class='row'>
+		<div class='col-md-2'><label class='control-label'>Wins</label></div>
+		<div class='col-md-1'><input class='form-control text-right' type='text' value='<%= @user.win_count %>' disabled='disabled'/></div>
+	</div>
+	<div class='row'>
+    <div class='col-md-2'><label class='control-label'>Win %</label></div>
+		<div class='col-md-1'><input class='form-control text-right' type='text' value='<%= number_to_percentage(@user.win_pct*100, precision: 0) %>' disabled='disabled'/></div>
+	</div>
+	<div class='row'>
+    <div class='col-md-2'><label class='control-label'>Longest Streak</label></div>
+		<div class='col-md-1'><input class='form-control text-right' type='text' value='<%= @user.longest_streak %>' disabled='disabled'/></div>
+	</div>
+</div>

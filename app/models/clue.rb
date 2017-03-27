@@ -10,6 +10,24 @@ class Clue < ApplicationRecord
 		Clue.where("clues.week < ?", dt.beginning_of_week).order(week: :desc, seq: :desc).first
 	end
 
+	def self.last_clues(as_of=Date.today)
+		if as_of.respond_to? :beginning_of_week
+			as_of = as_of.beginning_of_week
+		else
+			as_of = Date.parse(as_of).beginning_of_week
+		end
+		Clue.find_by_sql(["
+			SELECT c.*
+		  FROM clues c
+		  JOIN (
+			 		SELECT week, MAX(seq) max_seq
+					FROM clues
+					GROUP BY week
+		 		) m ON c.week = m.week AND c.seq = m.max_seq
+			WHERE c.week <= :as_of_week
+		 	ORDER BY c.week DESC", as_of_week: as_of])
+	end
+
 	def week=(dt)
 		if dt.respond_to? :beginning_of_week
 			self[:week] = dt.beginning_of_week

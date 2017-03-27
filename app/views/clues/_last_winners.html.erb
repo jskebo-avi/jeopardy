@@ -11,7 +11,7 @@
   <% if !current_user.nil? and !@last_winners.empty? %>
     <% @last_winners.each do |winner| %>
       <tr>
-        <td><%= winner.name %> <%= image_tag('thinker.gif', id: 'thinker') %></td>
+        <td><%= link_to winner.name, winner %> <%= image_tag('thinker.gif', id: 'thinker') %></td>
         <td class='text-right'><%= winner.winning_streak(@prev_week) %></td>
       </tr>
     <% end %>
