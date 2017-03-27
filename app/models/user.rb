@@ -129,7 +129,7 @@ class User < ApplicationRecord
   def longest_streak
     max_streak = 0
     streak = 0
-    last_clues = Clue.last_clues
+    last_clues = Clue.last_clues(Date.today.beginning_of_week - 7)
     last_clues.each do |c|
       winners = c.winning_users
       if winners.include?(self[:id])
@@ -149,7 +149,7 @@ class User < ApplicationRecord
 
   def win_count
     wins = 0
-    last_clues = Clue.last_clues
+    last_clues = Clue.last_clues(Date.today.beginning_of_week - 7)
     last_clues.each do |c|
       winners = c.winning_users
       if winners.include?(self[:id])
@@ -160,7 +160,10 @@ class User < ApplicationRecord
   end
 
   def win_pct
-    weeks_in = Clue.joins(:answers).where("answers.user_id = :user", user: self[:id]).select(:week).distinct(:week).count
+    weeks_in = Clue.joins(:answers)
+      .where("clues.week < :week AND answers.user_id = :user",
+        week: Date.today.beginning_of_week, user: self[:id])
+      .select(:week).distinct(:week).count
     weeks_won = self.win_count
     pct = weeks_in == 0 ? 0 : weeks_won.to_f/weeks_in
     return pct
