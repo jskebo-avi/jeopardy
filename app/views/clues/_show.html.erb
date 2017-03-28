@@ -18,6 +18,9 @@
 							<%= clue.text %>
 						<% end %>
 					</p>
+					<% if !clue.image.nil? and clue.image != '' %>
+						<img class='j-clue-img' src="<%= clue.image %>" alt="<%= clue.image %>" />
+					<% end %>
 				</td></tr>
 				<tr><td>
 					<% if !current_user.nil? and (current_user.clue_answered(clue.id) or @userCurrentClue.seq > clue.seq) %>

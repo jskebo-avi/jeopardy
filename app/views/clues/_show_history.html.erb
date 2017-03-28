@@ -16,6 +16,9 @@
 					<p class='j-clue'>
 						<%= clue.text %>
 					</p>
+					<% if !clue.image.nil? and clue.image != '' %>
+						<img class='j-clue-img' src="<%= clue.image %>" alt="<%= clue.image %>" />
+					<% end %>
 				</td></tr>
 				<tr><td>
 					<h6 class='text-center'><%= clue.correct_answer %></h6>
