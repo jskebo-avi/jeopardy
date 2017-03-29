@@ -13,13 +13,13 @@
 					</div>
 				</td></tr>
 				<tr><td>
-					<p class='j-clue'>
-						<% if !current_user.nil? and @userCurrentClue.seq >= clue.seq and (!clue.final? or current_user.clue_wagered(clue.id)) %>
+					<% if !current_user.nil? and @userCurrentClue.seq >= clue.seq and (!clue.final? or current_user.clue_wagered(clue.id)) %>
+						<p class='j-clue'>
 							<%= clue.text %>
+						</p>
+						<% if !clue.image.nil? and clue.image != '' %>
+							<img class='img-responsive center-block' src="<%= clue.image %>" alt="<%= clue.image %>" />
 						<% end %>
-					</p>
-					<% if !clue.image.nil? and clue.image != '' %>
-						<img class='j-clue-img' src="<%= clue.image %>" alt="<%= clue.image %>" />
 					<% end %>
 				</td></tr>
 				<tr><td>
