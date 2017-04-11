@@ -1,0 +1,35 @@
+document.addEventListener("turbolinks:load", function() {
+$(function() {
+	$('#btn-change-pw').click(function() {
+    var pw = $("#new-password").val();
+		var user = $(this).attr("data-user");
+		var changePwSuccessHandler = function(changePwResponse){
+      location.replace(changePwResponse.redirect_path);
+    }
+
+    $.ajax({
+    	url: "/users/change_password",
+    	data: JSON.stringify({ pw: pw, user: user }),
+    	dataType: 'json',
+    	contentType: 'application/json',
+    	type: 'POST',
+    }).done($.proxy(changePwSuccessHandler, this))
+    .fail(function() {
+    	debugger;
+    });
+	});
+
+  $("#new-password").on("input", function() {
+    var pw = $(this).val();
+    var btn = $("#btn-change-pw")
+    if(pw.length >= 6) {
+      btn.attr("disabled", false);
+      if(btn.hasClass("disabled")) btn.removeClass("disabled", true);
+    }
+    else {
+      btn.attr("disabled", true);
+      if(!btn.hasClass("disabled")) btn.addClass("disabled", true);
+    }
+  });
+});
+});

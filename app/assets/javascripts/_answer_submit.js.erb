@@ -3,13 +3,12 @@ $(function() {
   $("#wager_fld").on("input", function() {
     var wager = parseInt($(this).val());
     var max_wager = parseInt($(this).attr("data-max_wager"));
-    if(isNaN(wager) || wager < 0 || wager > max_wager) {
       var btn = $("#btn_submit_answer")
+    if(isNaN(wager) || wager < 0 || wager > max_wager) {
       btn.attr("disabled", true);
       if(!btn.hasClass("disabled")) btn.addClass("disabled", true);
     }
     else {
-      var btn = $("#btn_submit_answer")
       btn.attr("disabled", false);
       if(btn.hasClass("disabled")) btn.removeClass("disabled", true);
     }
@@ -17,13 +16,12 @@ $(function() {
 
   $("#response_fld").on("input", function() {
     var resp = $(this).val().trim();
+    var btn = $("#btn_submit_answer")
     if(resp !== "") {
-      var btn = $("#btn_submit_answer")
       btn.attr("disabled", false);
       if(btn.hasClass("disabled")) btn.removeClass("disabled", true);
     }
     else {
-      var btn = $("#btn_submit_answer")
       btn.attr("disabled", true);
       if(!btn.hasClass("disabled")) btn.addClass("disabled", true);
     }

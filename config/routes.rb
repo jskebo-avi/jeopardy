@@ -8,5 +8,6 @@ Rails.application.routes.draw do
   get 'history', to: 'history#index'
   post 'answers/evaluate'
   post 'answers/get_user_score'
+  post 'users/change_password'
   root 'home#index'
 end

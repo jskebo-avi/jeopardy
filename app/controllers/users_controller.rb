@@ -22,6 +22,17 @@ class UsersController < ApplicationController
 		redirect_to users_path
   end
 
+  def change_password
+    @user = User.find(params[:user])
+    encrypted_pw = User.new(password: params[:pw]).encrypted_password
+    @user.encrypted_password = encrypted_pw
+    @user.save
+    respond_to do |format|
+	    format.js   { render json: {redirect_path: users_path} }
+	    format.html { redirect_to users_path }
+		end
+  end
+
   private
 
 	def user_params
