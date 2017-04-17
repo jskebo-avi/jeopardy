@@ -168,4 +168,43 @@ class User < ApplicationRecord
     pct = weeks_in == 0 ? 0 : weeks_won.to_f/weeks_in
     return pct
   end
+
+  def answers_count(correct_only, include_zeros)
+    answers_cnt = Answer.joins(:clue).where(
+      "answers.user_id = :user
+        AND (:correct_only = false OR answers.status = 1)
+        AND (:include_zeros = true
+          OR (:include_zeros = false AND (clues.value > 0 OR clues.final = true)))",
+        user: self[:id], correct_only: correct_only, include_zeros: include_zeros)
+      .count
+    return answers_cnt
+  end
+
+  def correct_consecutive(include_zeros)
+    clues = Clue.joins(:answers).includes(:answers)
+      .where(
+      "answers.user_id = :user
+        AND (:include_zeros = true
+          OR (:include_zeros = false AND (clues.value > 0 OR clues.final = true)))",
+        user: self[:id], include_zeros: include_zeros)
+      .order(:week, :seq)
+
+    max_streak = 0
+    streak = 0
+    clues.each do |c|
+      a = c.answers[0]
+      if a.status == 1
+        streak += 1
+      else
+        if streak > max_streak
+          max_streak = streak
+        end
+        streak = 0
+      end
+    end
+    if streak > max_streak
+      max_streak = streak
+    end
+    return max_streak
+  end
 end

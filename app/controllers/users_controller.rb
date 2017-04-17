@@ -10,6 +10,17 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @wins = @user.win_count
+    @win_pct = @user.win_pct*100
+    @longest_streak = @user.longest_streak
+    @answers_count = @user.answers_count(false, false)
+    @answers_correct = @user.answers_count(true, false)
+    @answer_correct_pct = (@answers_correct.to_f/@answers_count)*100
+    @correct_consec = @user.correct_consecutive(false)
+    @answers_count_z = @user.answers_count(false, true)
+    @answers_correct_z = @user.answers_count(true, true)
+    @answer_correct_pct_z = (@answers_correct_z.to_f/@answers_count_z)*100
+    @correct_consec_z = @user.correct_consecutive(true)
   end
 
 	def edit

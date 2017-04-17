@@ -1,19 +1,66 @@
 <div class='container'>
   <div class='row'>
     <div class='col-md-12'>
-      <h3><%= @user.name %></h3>
+      <h2><%= @user.name %></h2>
     </div>
   </div>
 	<div class='row'>
-		<div class='col-md-2'><label class='control-label'>Wins</label></div>
-		<div class='col-md-1'><input class='form-control text-right' type='text' value='<%= @user.win_count %>' disabled='disabled'/></div>
-	</div>
-	<div class='row'>
-    <div class='col-md-2'><label class='control-label'>Win %</label></div>
-		<div class='col-md-1'><input class='form-control text-right' type='text' value='<%= number_to_percentage(@user.win_pct*100, precision: 0) %>' disabled='disabled'/></div>
-	</div>
-	<div class='row'>
-    <div class='col-md-2'><label class='control-label'>Longest Streak</label></div>
-		<div class='col-md-1'><input class='form-control text-right' type='text' value='<%= @user.longest_streak %>' disabled='disabled'/></div>
+		<div class='col-md-5'>
+			<table class='table table-bordered'>
+				<tr>
+					<th colspan='2'>Week Stats</<th>
+				</tr>
+				<tr>
+					<td>Wins</td>
+					<td><%= @wins %></td>
+				</tr>
+				<tr>
+					<td>Win %</td>
+					<td><%= number_to_percentage(@win_pct, precision: 0) %></td>
+				</tr>
+				<tr>
+					<td>Longest Streak</td>
+					<td><%= @longest_streak %></td>
+				</tr>
+				<tr>
+					<th colspan='2'>Answer Stats</<th>
+				</tr>
+				<tr>
+					<td>Clues Answered</td>
+					<td><%= @answers_count %></td>
+				</tr>
+				<tr>
+					<td>Correct Answers</td>
+					<td><%= @answers_correct %></td>
+				</tr>
+				<tr>
+					<td>Correct Answer %</td>
+					<td><%= number_to_percentage(@answer_correct_pct, precision: 0) %></td>
+				</tr>
+				<tr>
+					<td>Most Consecutive Correct</td>
+					<td><%= @correct_consec %></td>
+				</tr>
+				<tr>
+					<th colspan='2'>Including Zero Dollars</<th>
+				</tr>
+				<tr>
+					<td>Clues Answered</td>
+					<td><%= @answers_count_z %></td>
+				</tr>
+				<tr>
+					<td>Correct Answers</td>
+					<td><%= @answers_correct_z %></td>
+				</tr>
+				<tr>
+					<td>Correct Answer %</td>
+					<td><%= number_to_percentage(@answer_correct_pct_z, precision: 0) %></td>
+				</tr>
+				<tr>
+					<td>Most Consecutive Correct</td>
+					<td><%= @correct_consec_z %></td>
+				</tr>
+			</table>
+		</div>
 	</div>
 </div>
